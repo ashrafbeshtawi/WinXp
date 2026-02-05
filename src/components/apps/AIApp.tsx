@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useWindowStore } from '@/stores/windowStore';
 
 interface LogEntry {
   timestamp: string;
@@ -11,6 +12,8 @@ export function AIApp() {
   const [epoch, setEpoch] = useState(0);
   const [accuracy, setAccuracy] = useState(0);
   const [loss, setLoss] = useState(1.0);
+  const [showAbout, setShowAbout] = useState(false);
+  const openWindow = useWindowStore((state) => state.openWindow);
 
   const initialLogs: LogEntry[] = [
     { timestamp: '00:00:01', type: 'info', message: 'Neural Network Console v1.0 initialized' },
@@ -99,7 +102,87 @@ export function AIApp() {
   };
 
   return (
-    <div className="h-full flex flex-col bg-[#0a0a0f] text-white font-mono overflow-hidden">
+    <div className="h-full flex flex-col bg-[#0a0a0f] text-white font-mono overflow-hidden relative">
+      {/* Menu Bar */}
+      <div className="flex items-center px-2 py-1 bg-[#0d0d14] border-b border-cyan-900/50 text-xs text-gray-300">
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-cyan-800/30 cursor-pointer">Model</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-[#0d0d14] border border-cyan-700 shadow-md z-50 min-w-[150px]">
+            <div onClick={() => window.open('https://github.com/ashrafbeshtawi/Auto-Trader', '_blank')} className="px-4 py-1 hover:bg-cyan-800/30 cursor-pointer">Open Auto-Trader</div>
+            <div onClick={() => {
+              setEpoch(0);
+              setAccuracy(0);
+              setLoss(1.0);
+              setLogs([]);
+            }} className="px-4 py-1 hover:bg-cyan-800/30 cursor-pointer">Reset Training</div>
+            <div className="border-t border-cyan-700 my-1" />
+            <div onClick={() => window.print()} className="px-4 py-1 hover:bg-cyan-800/30 cursor-pointer">Export Logs</div>
+          </div>
+        </div>
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-cyan-800/30 cursor-pointer">Training</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-[#0d0d14] border border-cyan-700 shadow-md z-50 min-w-[160px]">
+            <div className="px-4 py-1 hover:bg-cyan-800/30 cursor-pointer flex items-center">✓ Genetic Algorithm</div>
+            <div className="px-4 py-1 hover:bg-cyan-800/30 cursor-pointer text-gray-500">&nbsp;&nbsp;&nbsp;Neural Network</div>
+            <div className="px-4 py-1 hover:bg-cyan-800/30 cursor-pointer text-gray-500">&nbsp;&nbsp;&nbsp;Reinforcement</div>
+          </div>
+        </div>
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-cyan-800/30 cursor-pointer">Tools</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-[#0d0d14] border border-cyan-700 shadow-md z-50 min-w-[180px]">
+            <div onClick={() => openWindow({
+              id: 'minesweeper-' + Date.now(),
+              title: 'Minesweeper',
+              icon: '/img/Minesweeper.png',
+              component: 'minesweeper',
+              x: 200 + Math.random() * 100,
+              y: 100 + Math.random() * 80,
+              width: 280,
+              height: 380,
+              minWidth: 280,
+              minHeight: 380,
+              isMinimized: false,
+              isMaximized: false,
+            })} className="px-4 py-1 hover:bg-cyan-800/30 cursor-pointer">🎮 Train Your Brain</div>
+            <div onClick={() => openWindow({
+              id: 'backend-' + Date.now(),
+              title: 'Backend Console',
+              icon: '/img/Command Prompt.png',
+              component: 'backend',
+              x: 150 + Math.random() * 100,
+              y: 80 + Math.random() * 80,
+              width: 700,
+              height: 500,
+              minWidth: 500,
+              minHeight: 350,
+              isMinimized: false,
+              isMaximized: false,
+            })} className="px-4 py-1 hover:bg-cyan-800/30 cursor-pointer">🖥️ Terminal</div>
+          </div>
+        </div>
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-cyan-800/30 cursor-pointer">Help</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-[#0d0d14] border border-cyan-700 shadow-md z-50 min-w-[180px]">
+            <div onClick={() => openWindow({
+              id: 'contact-' + Date.now(),
+              title: 'Contact',
+              icon: '/img/Email.png',
+              component: 'contact',
+              x: 150 + Math.random() * 50,
+              y: 80 + Math.random() * 50,
+              width: 750,
+              height: 550,
+              minWidth: 500,
+              minHeight: 400,
+              isMinimized: false,
+              isMaximized: false,
+            })} className="px-4 py-1 hover:bg-cyan-800/30 cursor-pointer">Contact Developer</div>
+            <div className="border-t border-cyan-700 my-1" />
+            <div onClick={() => setShowAbout(true)} className="px-4 py-1 hover:bg-cyan-800/30 cursor-pointer">About AI Console</div>
+          </div>
+        </div>
+      </div>
+
       {/* Header */}
       <div className="relative bg-gradient-to-r from-[#0f1a2e] to-[#1a0f2e] border-b border-cyan-900/50 p-4">
         {/* Animated background grid */}
@@ -211,6 +294,36 @@ export function AIApp() {
           <span>View Auto-Trader on GitHub</span>
         </a>
       </div>
+
+      {/* About Dialog */}
+      {showAbout && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/60 z-50">
+          <div className="bg-[#0d0d14] border-2 border-cyan-500 shadow-lg p-4 min-w-[350px] text-gray-200 rounded-lg">
+            <div className="flex items-center gap-3 mb-4">
+              <img src="/img/System Information.png" alt="AI" className="w-12 h-12" />
+              <div>
+                <div className="font-bold text-cyan-400">Neural Network Console</div>
+                <div className="text-xs text-gray-400">AI Training System v1.0</div>
+              </div>
+            </div>
+            <div className="text-xs mb-4 space-y-2">
+              <p>🧠 <strong>Fun Fact:</strong> GPT-4 has ~1.8 trillion parameters - more than neurons in a bee's brain!</p>
+              <p>🧬 <strong>Easter Egg:</strong> Watch the accuracy reach 98.5% - that's the genetic algorithm at work!</p>
+              <p>📈 <strong>Project:</strong> Auto-Trader uses evolutionary algorithms to optimize trading strategies</p>
+              <p>⚡ <strong>Stack:</strong> Python, TensorFlow, Genetic Algorithms, n8n</p>
+              <p className="text-gray-500 italic mt-2">"AI is the new electricity." - Andrew Ng</p>
+            </div>
+            <div className="flex justify-end">
+              <button
+                onClick={() => setShowAbout(false)}
+                className="px-4 py-1 bg-cyan-600 hover:bg-cyan-500 border border-cyan-400 rounded text-xs text-white"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useWindowStore } from '@/stores/windowStore';
+import { useAudio } from '@/hooks/useAudio';
 
 interface TitleBarProps {
   windowId: string;
@@ -13,8 +14,10 @@ interface TitleBarProps {
 export function TitleBar({ windowId, title, icon, isActive, onMouseDown }: TitleBarProps) {
   const { minimizeWindow, maximizeWindow, closeWindow } = useWindowStore();
   const window = useWindowStore((state) => state.windows.find((w) => w.id === windowId));
+  const { play } = useAudio();
 
   const handleMaximize = () => {
+    play('click');
     if (window?.isMaximized) {
       useWindowStore.getState().restoreWindow(windowId);
     } else {
@@ -24,36 +27,41 @@ export function TitleBar({ windowId, title, icon, isActive, onMouseDown }: Title
 
   return (
     <div
-      className={`h-[25px] flex items-center justify-between px-1 rounded-t cursor-move select-none ${
-        isActive
-          ? 'bg-gradient-to-r from-[#0058e6] via-[#3a93ff] to-[#0058e6]'
-          : 'bg-gradient-to-r from-[#7a96df] via-[#a8c0ef] to-[#7a96df]'
-      }`}
+      className={`title-bar cursor-move select-none ${!isActive ? 'inactive' : ''}`}
       onMouseDown={onMouseDown}
     >
-      <div className="flex items-center gap-1 text-white font-bold text-[11px] truncate">
-        <span>{icon}</span>
+      <div className="title-bar-text flex items-center gap-1">
+        {icon.startsWith('/') ? (
+          <img src={icon} alt="" className="w-4 h-4 object-contain" draggable={false} />
+        ) : (
+          <span dangerouslySetInnerHTML={{ __html: icon }} />
+        )}
         <span className="truncate">{title}</span>
       </div>
-      <div className="flex gap-[2px]">
+      <div className="title-bar-controls">
         <button
-          onClick={() => minimizeWindow(windowId)}
-          className="w-[21px] h-[21px] rounded-sm bg-gradient-to-b from-[#3c8cff] to-[#1c4cc4] border border-white/30 text-white text-xs flex items-center justify-center hover:brightness-110"
-        >
-          _
-        </button>
+          aria-label="Minimize"
+          onClick={(e) => {
+            e.stopPropagation();
+            play('click');
+            minimizeWindow(windowId);
+          }}
+        />
         <button
-          onClick={handleMaximize}
-          className="w-[21px] h-[21px] rounded-sm bg-gradient-to-b from-[#3c8cff] to-[#1c4cc4] border border-white/30 text-white text-xs flex items-center justify-center hover:brightness-110"
-        >
-          □
-        </button>
+          aria-label="Maximize"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleMaximize();
+          }}
+        />
         <button
-          onClick={() => closeWindow(windowId)}
-          className="w-[21px] h-[21px] rounded-sm bg-gradient-to-b from-[#ff6b6b] to-[#c43c3c] border border-white/30 text-white text-xs flex items-center justify-center hover:brightness-110"
-        >
-          ✕
-        </button>
+          aria-label="Close"
+          onClick={(e) => {
+            e.stopPropagation();
+            play('click');
+            closeWindow(windowId);
+          }}
+        />
       </div>
     </div>
   );

@@ -1,7 +1,10 @@
 import { useState } from 'react';
+import { useWindowStore } from '@/stores/windowStore';
 
 export function FrontendApp() {
   const [showFavorites, setShowFavorites] = useState(true);
+  const [showAbout, setShowAbout] = useState(false);
+  const openWindow = useWindowStore((state) => state.openWindow);
 
   const favorites = [
     { name: 'Horus', url: 'https://github.com/ashrafbeshtawi/Horus', icon: '📁' },
@@ -9,15 +12,91 @@ export function FrontendApp() {
   ];
 
   return (
-    <div className="h-full flex flex-col bg-white">
+    <div className="h-full flex flex-col bg-white relative">
       {/* Menu Bar */}
       <div className="flex items-center px-2 py-1 bg-[#ece9d8] border-b border-[#919b9c] text-xs">
-        <span className="px-2 hover:bg-[#316ac5] hover:text-white cursor-pointer">File</span>
-        <span className="px-2 hover:bg-[#316ac5] hover:text-white cursor-pointer">Edit</span>
-        <span className="px-2 hover:bg-[#316ac5] hover:text-white cursor-pointer">View</span>
-        <span className="px-2 hover:bg-[#316ac5] hover:text-white cursor-pointer">Favorites</span>
-        <span className="px-2 hover:bg-[#316ac5] hover:text-white cursor-pointer">Tools</span>
-        <span className="px-2 hover:bg-[#316ac5] hover:text-white cursor-pointer">Help</span>
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">File</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-white border border-gray-400 shadow-md z-50 min-w-[150px]">
+            <div onClick={() => window.open('https://github.com/ashrafbeshtawi/Horus', '_blank')} className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">Open Horus</div>
+            <div onClick={() => window.open('https://mocking-bird-three.vercel.app/', '_blank')} className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">Open Mocking-Bird</div>
+            <div className="border-t border-gray-300 my-1" />
+            <div onClick={() => window.print()} className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">Print...</div>
+          </div>
+        </div>
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">View</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-white border border-gray-400 shadow-md z-50 min-w-[150px]">
+            <div onClick={() => setShowFavorites(!showFavorites)} className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer flex items-center">
+              {showFavorites && <span className="mr-2">✓</span>}
+              <span className={!showFavorites ? 'ml-5' : ''}>Favorites Bar</span>
+            </div>
+            <div onClick={() => window.location.reload()} className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">Refresh</div>
+          </div>
+        </div>
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">Favorites</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-white border border-gray-400 shadow-md z-50 min-w-[180px]">
+            <div onClick={() => window.open('https://github.com/ashrafbeshtawi/Horus', '_blank')} className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">📁 Horus</div>
+            <div onClick={() => window.open('https://mocking-bird-three.vercel.app/', '_blank')} className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">🐦 Mocking-Bird</div>
+            <div className="border-t border-gray-300 my-1" />
+            <div onClick={() => window.open('https://github.com/ashrafbeshtawi', '_blank')} className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">⭐ All Projects</div>
+          </div>
+        </div>
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">Tools</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-white border border-gray-400 shadow-md z-50 min-w-[180px]">
+            <div onClick={() => openWindow({
+              id: 'minesweeper-' + Date.now(),
+              title: 'Minesweeper',
+              icon: '/img/Minesweeper.png',
+              component: 'minesweeper',
+              x: 200 + Math.random() * 100,
+              y: 100 + Math.random() * 80,
+              width: 280,
+              height: 380,
+              minWidth: 280,
+              minHeight: 380,
+              isMinimized: false,
+              isMaximized: false,
+            })} className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">🎮 Take a Break</div>
+            <div onClick={() => openWindow({
+              id: 'notepad-' + Date.now(),
+              title: 'Notepad',
+              icon: '/img/Notepad.png',
+              component: 'notepad',
+              x: 150 + Math.random() * 100,
+              y: 80 + Math.random() * 80,
+              width: 500,
+              height: 400,
+              minWidth: 300,
+              minHeight: 200,
+              isMinimized: false,
+              isMaximized: false,
+            })} className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">📝 Open Notepad</div>
+          </div>
+        </div>
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">Help</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-white border border-gray-400 shadow-md z-50 min-w-[180px]">
+            <div onClick={() => openWindow({
+              id: 'contact-' + Date.now(),
+              title: 'Contact',
+              icon: '/img/Email.png',
+              component: 'contact',
+              x: 150 + Math.random() * 50,
+              y: 80 + Math.random() * 50,
+              width: 750,
+              height: 550,
+              minWidth: 500,
+              minHeight: 400,
+              isMinimized: false,
+              isMaximized: false,
+            })} className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">Contact Developer</div>
+            <div className="border-t border-gray-300 my-1" />
+            <div onClick={() => setShowAbout(true)} className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">About Frontend</div>
+          </div>
+        </div>
       </div>
 
       {/* Toolbar */}
@@ -174,6 +253,35 @@ export function FrontendApp() {
           <span className="text-green-600">🔒</span>
         </div>
       </div>
+
+      {/* About Dialog */}
+      {showAbout && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/30 z-50">
+          <div className="bg-[#ece9d8] border-2 border-[#0055e5] shadow-lg p-4 min-w-[350px]">
+            <div className="flex items-center gap-3 mb-4">
+              <img src="/img/HTML.png" alt="Frontend" className="w-12 h-12" />
+              <div>
+                <div className="font-bold">Frontend Explorer</div>
+                <div className="text-xs text-gray-600">Internet Explorer XP Edition</div>
+              </div>
+            </div>
+            <div className="text-xs mb-4 space-y-2">
+              <p>🎨 <strong>Fun Fact:</strong> The first website ever created is still online at info.cern.ch!</p>
+              <p>💡 <strong>Easter Egg:</strong> Try pressing F12 in any browser to see the Matrix...</p>
+              <p>🚀 <strong>Tech Stack:</strong> Next.js, Three.js, WebGL, TypeScript</p>
+              <p className="text-gray-500 italic mt-2">"Any sufficiently advanced CSS is indistinguishable from magic." - Arthur C. Clarke (probably)</p>
+            </div>
+            <div className="flex justify-end">
+              <button
+                onClick={() => setShowAbout(false)}
+                className="px-4 py-1 bg-[#ece9d8] border border-[#003c74] rounded text-xs hover:bg-[#c1d2ee]"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

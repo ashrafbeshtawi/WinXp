@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd WinXP WebOS portfolio design document\n\nComplete design specification for Windows XP-style web OS portfolio including:\n- Boot sequence and desktop layout\n- Window management system\n- Portfolio apps \\(IE, Terminal, Wallet, Neural Viewer, Outlook styles\\)\n- Utility apps \\(Minesweeper, Notepad, Explorer\\)\n- Audio system and context menus\n- Easter eggs and hidden content\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(npm install:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\ndocs: add comprehensive implementation plan for WinXP WebOS\n\n21 tasks covering:\n- Project setup with Next.js, Zustand, Howler.js\n- Boot sequence \\(BIOS, loading, welcome\\)\n- Desktop with icons and wallpaper\n- Window system \\(drag, resize, z-index\\)\n- Taskbar with start menu\n- Portfolio apps \\(IE, Terminal, Wallet, Neural, Outlook\\)\n- Utilities \\(Notepad, Minesweeper, Explorer\\)\n- Context menu and audio system\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(curl:*)",
+      "Bash(timeout 15 npm run dev)",
+      "Bash(timeout 20 npm run dev:*)",
+      "Bash(git commit:*)",
+      "Bash(wc -l:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npx tsc:*)",
+      "Bash(git -C /Users/ashraf.beshtawi/Desktop/WinXp status)",
+      "Bash(git -C /Users/ashraf.beshtawi/Desktop/WinXp log --oneline -5)",
+      "Bash(git -C /Users/ashraf.beshtawi/Desktop/WinXp add public/img/frontend.svg public/img/backend.svg public/img/web3.svg public/img/ai.svg public/img/me.svg)",
+      "Bash(git -C /Users/ashraf.beshtawi/Desktop/WinXp commit -m \"$\\(cat <<''EOF''\nfeat: add portfolio placeholder SVG images\n\nAdd themed SVG placeholder images for portfolio app windows:\n- frontend.svg: Browser window with code and 3D cube icon\n- backend.svg: Server rack with terminal and database\n- web3.svg: Blockchain blocks with Ethereum logo and wallet\n- ai.svg: Neural network visualization with connected nodes\n- me.svg: Professional profile avatar placeholder\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(pkill:*)",
+      "WebFetch(domain:botoxparty.github.io)",
+      "Bash(file:*)",
+      "Bash(gh auth status:*)",
+      "Bash(gh auth login:*)",
+      "Bash(gh api:*)",
+      "Bash(gh repo create:*)",
+      "Bash(git push:*)"
+    ]
+  }
+}

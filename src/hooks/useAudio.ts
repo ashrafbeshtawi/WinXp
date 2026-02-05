@@ -1,33 +1,71 @@
 'use client';
 
-import { useCallback, useRef, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Howl } from 'howler';
 import { useAudioStore } from '@/stores/audioStore';
 
-const sounds: Record<string, Howl> = {};
+export type SoundType = 'startup' | 'click' | 'error' | 'shutdown';
+
+// Lazy-loaded sounds cache
+const soundsCache: Record<string, Howl | null> = {
+  startup: null,
+  click: null,
+  error: null,
+  shutdown: null,
+};
+
+function getSound(name: SoundType): Howl {
+  if (!soundsCache[name]) {
+    const volumes: Record<SoundType, number> = {
+      startup: 0.5,
+      click: 0.4,
+      error: 0.4,
+      shutdown: 0.5,
+    };
+
+    soundsCache[name] = new Howl({
+      src: [`/sounds/${name}.mp3`],
+      volume: volumes[name],
+      html5: true, // Use HTML5 Audio for better compatibility
+    });
+  }
+  return soundsCache[name]!;
+}
 
 export function useAudio() {
   const { isMuted, volume } = useAudioStore();
-  const initialized = useRef(false);
+  const volumeRef = useRef(volume);
 
+  // Keep volume ref updated
   useEffect(() => {
-    if (!initialized.current) {
-      sounds.startup = new Howl({ src: ['/sounds/startup.mp3'], volume: 0.5 });
-      sounds.click = new Howl({ src: ['/sounds/click.mp3'], volume: 0.3 });
-      sounds.error = new Howl({ src: ['/sounds/error.mp3'], volume: 0.4 });
-      initialized.current = true;
+    volumeRef.current = volume;
+  }, [volume]);
+
+  const play = useCallback(
+    (sound: SoundType) => {
+      if (isMuted) return;
+
+      try {
+        const howl = getSound(sound);
+        howl.volume(volumeRef.current * (sound === 'click' ? 0.8 : 1));
+        howl.play();
+      } catch (e) {
+        console.warn('Audio playback failed:', e);
+      }
+    },
+    [isMuted]
+  );
+
+  const stop = useCallback((sound: SoundType) => {
+    try {
+      const howl = soundsCache[sound];
+      if (howl) {
+        howl.stop();
+      }
+    } catch (e) {
+      console.warn('Audio stop failed:', e);
     }
   }, []);
 
-  const play = useCallback(
-    (sound: 'startup' | 'click' | 'error') => {
-      if (!isMuted && sounds[sound]) {
-        sounds[sound].volume(volume);
-        sounds[sound].play();
-      }
-    },
-    [isMuted, volume]
-  );
-
-  return { play };
+  return { play, stop };
 }

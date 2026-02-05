@@ -101,8 +101,8 @@ export function Window({ window: win, isActive, children }: WindowProps) {
   return (
     <div
       ref={windowRef}
-      className="absolute flex flex-col bg-[#ece9d8] border border-[#0055e5] rounded-t shadow-xl"
-      style={style}
+      className="window absolute flex flex-col"
+      style={{ ...style, margin: 0 }}
       onMouseDown={handleMouseDown}
     >
       <TitleBar
@@ -112,7 +112,7 @@ export function Window({ window: win, isActive, children }: WindowProps) {
         isActive={isActive}
         onMouseDown={handleTitleMouseDown}
       />
-      <div className="flex-1 overflow-auto bg-white border-t-0">{children}</div>
+      <div className="window-body flex-1 overflow-auto !m-0 !p-0">{children}</div>
 
       {/* Resize handles */}
       {!win.isMaximized && (

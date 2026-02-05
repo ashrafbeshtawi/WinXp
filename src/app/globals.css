@@ -46,6 +46,17 @@ html, body {
   box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #808080;
 }
 
+/* Fix title bar control buttons - override xp.css general button styles */
+.title-bar-controls button {
+  min-width: 21px !important;
+  min-height: 21px !important;
+  width: 21px !important;
+  height: 21px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  margin-left: 2px !important;
+}
+
 /* Scrollbar XP Style */
 ::-webkit-scrollbar {
   width: 16px;
@@ -64,4 +75,36 @@ html, body {
 ::-webkit-scrollbar-button {
   background: #ece9d8;
   border: 1px solid #919b9c;
+}
+
+/* Firework animation */
+@keyframes firework {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(0);
+    opacity: 0;
+  }
+}
+
+.animate-firework {
+  animation: firework 1s ease-out forwards;
+}
+
+/* Confetti animation */
+@keyframes confetti {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(500px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.animate-confetti {
+  animation: confetti 4s ease-in-out forwards;
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useWindowStore } from '@/stores/windowStore';
 
 type CellState = {
   isMine: boolean;
@@ -193,6 +194,9 @@ export function MinesweeperApp() {
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [firstClick, setFirstClick] = useState(true);
   const [isMouseDown, setIsMouseDown] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
+  const [showBestTimes, setShowBestTimes] = useState(false);
+  const openWindow = useWindowStore((state) => state.openWindow);
 
   const { rows, cols, mines } = DIFFICULTIES[difficulty];
 
@@ -356,19 +360,28 @@ export function MinesweeperApp() {
               <span className={difficulty !== 'expert' ? 'ml-5' : ''}>Expert</span>
             </div>
             <div className="border-t border-gray-300 my-1" />
-            <div className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">Best Times...</div>
-            <div className="border-t border-gray-300 my-1" />
-            <div className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">Exit</div>
+            <div onClick={() => setShowBestTimes(true)} className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">Best Times...</div>
           </div>
         </div>
         <div className="relative group">
           <span className="px-2 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">Help</span>
           <div className="hidden group-hover:block absolute left-0 top-full bg-white border border-gray-400 shadow-md z-50 min-w-[150px]">
-            <div className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">Contents</div>
-            <div className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">Search for Help on...</div>
-            <div className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">Using Help</div>
+            <div onClick={() => openWindow({
+              id: 'contact-' + Date.now(),
+              title: 'Help and Support',
+              icon: '/img/Help and Support.png',
+              component: 'contact',
+              x: 150 + Math.random() * 50,
+              y: 80 + Math.random() * 50,
+              width: 750,
+              height: 550,
+              minWidth: 500,
+              minHeight: 400,
+              isMinimized: false,
+              isMaximized: false,
+            })} className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">Help Topics</div>
             <div className="border-t border-gray-300 my-1" />
-            <div className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">About Minesweeper</div>
+            <div onClick={() => setShowAbout(true)} className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer">About Minesweeper</div>
           </div>
         </div>
       </div>
@@ -436,6 +449,64 @@ export function MinesweeperApp() {
           </div>
         </div>
       </div>
+
+      {/* About Dialog */}
+      {showAbout && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/30 z-50">
+          <div className="bg-[#ece9d8] border-2 border-[#0055e5] shadow-lg p-4 min-w-[280px]">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-4xl">💣</span>
+              <div>
+                <div className="font-bold">Minesweeper</div>
+                <div className="text-xs text-gray-600">Ashraf OS Edition</div>
+              </div>
+            </div>
+            <div className="text-xs mb-4">
+              <p>Classic Minesweeper recreated for Ashraf OS.</p>
+              <p className="mt-2">Left click to reveal, right click to flag!</p>
+            </div>
+            <div className="flex justify-end">
+              <button
+                onClick={() => setShowAbout(false)}
+                className="px-4 py-1 bg-[#ece9d8] border border-[#003c74] rounded text-xs hover:bg-[#c1d2ee]"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Best Times Dialog */}
+      {showBestTimes && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/30 z-50">
+          <div className="bg-[#ece9d8] border-2 border-[#0055e5] shadow-lg p-4 min-w-[280px]">
+            <div className="font-bold mb-4">Fastest Mine Sweepers</div>
+            <div className="text-xs space-y-2 mb-4">
+              <div className="flex justify-between">
+                <span>Beginner:</span>
+                <span>999 seconds - Anonymous</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Intermediate:</span>
+                <span>999 seconds - Anonymous</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Expert:</span>
+                <span>999 seconds - Anonymous</span>
+              </div>
+            </div>
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setShowBestTimes(false)}
+                className="px-4 py-1 bg-[#ece9d8] border border-[#003c74] rounded text-xs hover:bg-[#c1d2ee]"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

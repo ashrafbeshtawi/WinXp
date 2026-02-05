@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useWindowStore } from '@/stores/windowStore';
 
 interface TerminalLine {
   type: 'prompt' | 'command' | 'output';
@@ -10,6 +11,8 @@ export function BackendApp() {
   const [visibleLines, setVisibleLines] = useState<TerminalLine[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showCursor, setShowCursor] = useState(true);
+  const [showAbout, setShowAbout] = useState(false);
+  const openWindow = useWindowStore((state) => state.openWindow);
 
   const terminalContent: TerminalLine[] = [
     { type: 'prompt', text: 'ashraf@berlin:~$', delay: 0 },
@@ -153,7 +156,103 @@ export function BackendApp() {
   }
 
   return (
-    <div className="h-full flex flex-col bg-black font-mono text-sm">
+    <div className="h-full flex flex-col bg-black font-mono text-sm relative">
+      {/* Menu Bar */}
+      <div className="flex items-center px-2 py-1 bg-[#2d2d2d] border-b border-gray-600 text-xs text-gray-300">
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-gray-600 cursor-pointer">File</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-[#2d2d2d] border border-gray-600 shadow-md z-50 min-w-[150px]">
+            <div onClick={() => window.open('https://github.com/ashrafbeshtawi', '_blank')} className="px-4 py-1 hover:bg-gray-600 cursor-pointer">Open GitHub</div>
+            <div onClick={() => openWindow({
+              id: 'notepad-' + Date.now(),
+              title: 'Notepad',
+              icon: '/img/Notepad.png',
+              component: 'notepad',
+              x: 150 + Math.random() * 100,
+              y: 80 + Math.random() * 80,
+              width: 500,
+              height: 400,
+              minWidth: 300,
+              minHeight: 200,
+              isMinimized: false,
+              isMaximized: false,
+            })} className="px-4 py-1 hover:bg-gray-600 cursor-pointer">New Script</div>
+            <div className="border-t border-gray-600 my-1" />
+            <div onClick={() => window.print()} className="px-4 py-1 hover:bg-gray-600 cursor-pointer">Print...</div>
+          </div>
+        </div>
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-gray-600 cursor-pointer">Edit</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-[#2d2d2d] border border-gray-600 shadow-md z-50 min-w-[150px]">
+            <div className="px-4 py-1 hover:bg-gray-600 cursor-pointer text-gray-500">Copy (Ctrl+C)</div>
+            <div className="px-4 py-1 hover:bg-gray-600 cursor-pointer text-gray-500">Paste (Ctrl+V)</div>
+            <div className="border-t border-gray-600 my-1" />
+            <div className="px-4 py-1 hover:bg-gray-600 cursor-pointer text-gray-500">Select All</div>
+          </div>
+        </div>
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-gray-600 cursor-pointer">View</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-[#2d2d2d] border border-gray-600 shadow-md z-50 min-w-[150px]">
+            <div onClick={() => setCurrentIndex(0)} className="px-4 py-1 hover:bg-gray-600 cursor-pointer">Replay Animation</div>
+            <div onClick={() => window.location.reload()} className="px-4 py-1 hover:bg-gray-600 cursor-pointer">Refresh</div>
+          </div>
+        </div>
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-gray-600 cursor-pointer">Tools</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-[#2d2d2d] border border-gray-600 shadow-md z-50 min-w-[180px]">
+            <div onClick={() => openWindow({
+              id: 'minesweeper-' + Date.now(),
+              title: 'Minesweeper',
+              icon: '/img/Minesweeper.png',
+              component: 'minesweeper',
+              x: 200 + Math.random() * 100,
+              y: 100 + Math.random() * 80,
+              width: 280,
+              height: 380,
+              minWidth: 280,
+              minHeight: 380,
+              isMinimized: false,
+              isMaximized: false,
+            })} className="px-4 py-1 hover:bg-gray-600 cursor-pointer">🎮 Take a Break</div>
+            <div onClick={() => openWindow({
+              id: 'ai-' + Date.now(),
+              title: 'AI Console',
+              icon: '/img/System Information.png',
+              component: 'ai',
+              x: 150 + Math.random() * 100,
+              y: 80 + Math.random() * 80,
+              width: 700,
+              height: 500,
+              minWidth: 500,
+              minHeight: 350,
+              isMinimized: false,
+              isMaximized: false,
+            })} className="px-4 py-1 hover:bg-gray-600 cursor-pointer">🧠 AI Console</div>
+          </div>
+        </div>
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-gray-600 cursor-pointer">Help</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-[#2d2d2d] border border-gray-600 shadow-md z-50 min-w-[180px]">
+            <div onClick={() => openWindow({
+              id: 'contact-' + Date.now(),
+              title: 'Contact',
+              icon: '/img/Email.png',
+              component: 'contact',
+              x: 150 + Math.random() * 50,
+              y: 80 + Math.random() * 50,
+              width: 750,
+              height: 550,
+              minWidth: 500,
+              minHeight: 400,
+              isMinimized: false,
+              isMaximized: false,
+            })} className="px-4 py-1 hover:bg-gray-600 cursor-pointer">Contact Developer</div>
+            <div className="border-t border-gray-600 my-1" />
+            <div onClick={() => setShowAbout(true)} className="px-4 py-1 hover:bg-gray-600 cursor-pointer">About Backend</div>
+          </div>
+        </div>
+      </div>
+
       {/* Terminal Header */}
       <div className="flex items-center justify-between px-3 py-1 bg-gradient-to-r from-gray-800 to-gray-700 border-b border-gray-600">
         <div className="flex items-center gap-2">
@@ -219,6 +318,36 @@ export function BackendApp() {
         </a>
         <span>UTF-8</span>
       </div>
+
+      {/* About Dialog */}
+      {showAbout && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-50">
+          <div className="bg-[#2d2d2d] border-2 border-green-500 shadow-lg p-4 min-w-[350px] text-gray-200">
+            <div className="flex items-center gap-3 mb-4">
+              <img src="/img/Command Prompt.png" alt="Backend" className="w-12 h-12" />
+              <div>
+                <div className="font-bold text-green-400">Backend Console</div>
+                <div className="text-xs text-gray-400">Terminal Emulator v1.0</div>
+              </div>
+            </div>
+            <div className="text-xs mb-4 space-y-2">
+              <p>🐧 <strong>Fun Fact:</strong> Linux powers 96.3% of the world's top 1 million web servers!</p>
+              <p>💡 <strong>Easter Egg:</strong> Type "sudo make me a sandwich" in a real terminal...</p>
+              <p>🚀 <strong>Stack:</strong> Symfony, PHP 8, PostgreSQL, Docker, Redis</p>
+              <p>⚡ <strong>Pro Tip:</strong> Real developers don't use GUIs - they use vim and regret nothing.</p>
+              <p className="text-gray-500 italic mt-2">"There are only two hard things in programming: cache invalidation and naming things." - Phil Karlton</p>
+            </div>
+            <div className="flex justify-end">
+              <button
+                onClick={() => setShowAbout(false)}
+                className="px-4 py-1 bg-green-600 hover:bg-green-500 border border-green-400 rounded text-xs text-white"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

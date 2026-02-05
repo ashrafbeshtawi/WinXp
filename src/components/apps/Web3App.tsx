@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useWindowStore } from '@/stores/windowStore';
 
 interface Transaction {
   id: string;
@@ -11,6 +12,8 @@ interface Transaction {
 
 export function Web3App() {
   const [balance, setBalance] = useState(0);
+  const [showAbout, setShowAbout] = useState(false);
+  const openWindow = useWindowStore((state) => state.openWindow);
   const targetBalance = 42.069;
 
   // Animate balance counting up
@@ -61,7 +64,82 @@ export function Web3App() {
   };
 
   return (
-    <div className="h-full flex flex-col bg-gradient-to-br from-[#0f0f23] via-[#1a1a3e] to-[#0f0f23] text-white">
+    <div className="h-full flex flex-col bg-gradient-to-br from-[#0f0f23] via-[#1a1a3e] to-[#0f0f23] text-white relative">
+      {/* Menu Bar */}
+      <div className="flex items-center px-2 py-1 bg-[#1a1a2e] border-b border-purple-900/50 text-xs text-gray-300">
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-purple-800/50 cursor-pointer">Wallet</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-[#1a1a2e] border border-purple-700 shadow-md z-50 min-w-[150px]">
+            <div onClick={() => window.open('https://landlord-liart.vercel.app/', '_blank')} className="px-4 py-1 hover:bg-purple-800/50 cursor-pointer">Open LandLord</div>
+            <div onClick={() => window.open('https://github.com/ashrafbeshtawi', '_blank')} className="px-4 py-1 hover:bg-purple-800/50 cursor-pointer">View on GitHub</div>
+            <div className="border-t border-purple-700 my-1" />
+            <div onClick={() => window.print()} className="px-4 py-1 hover:bg-purple-800/50 cursor-pointer">Export Report</div>
+          </div>
+        </div>
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-purple-800/50 cursor-pointer">Network</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-[#1a1a2e] border border-purple-700 shadow-md z-50 min-w-[150px]">
+            <div className="px-4 py-1 hover:bg-purple-800/50 cursor-pointer flex items-center">✓ Ethereum Mainnet</div>
+            <div className="px-4 py-1 hover:bg-purple-800/50 cursor-pointer text-gray-500">&nbsp;&nbsp;&nbsp;Polygon</div>
+            <div className="px-4 py-1 hover:bg-purple-800/50 cursor-pointer text-gray-500">&nbsp;&nbsp;&nbsp;Arbitrum</div>
+          </div>
+        </div>
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-purple-800/50 cursor-pointer">Tools</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-[#1a1a2e] border border-purple-700 shadow-md z-50 min-w-[180px]">
+            <div onClick={() => openWindow({
+              id: 'minesweeper-' + Date.now(),
+              title: 'Minesweeper',
+              icon: '/img/Minesweeper.png',
+              component: 'minesweeper',
+              x: 200 + Math.random() * 100,
+              y: 100 + Math.random() * 80,
+              width: 280,
+              height: 380,
+              minWidth: 280,
+              minHeight: 380,
+              isMinimized: false,
+              isMaximized: false,
+            })} className="px-4 py-1 hover:bg-purple-800/50 cursor-pointer">🎮 Mine Crypto (Game)</div>
+            <div onClick={() => openWindow({
+              id: 'ai-' + Date.now(),
+              title: 'AI Console',
+              icon: '/img/System Information.png',
+              component: 'ai',
+              x: 150 + Math.random() * 100,
+              y: 80 + Math.random() * 80,
+              width: 700,
+              height: 500,
+              minWidth: 500,
+              minHeight: 350,
+              isMinimized: false,
+              isMaximized: false,
+            })} className="px-4 py-1 hover:bg-purple-800/50 cursor-pointer">🧠 AI Trading</div>
+          </div>
+        </div>
+        <div className="relative group">
+          <span className="px-2 py-1 hover:bg-purple-800/50 cursor-pointer">Help</span>
+          <div className="hidden group-hover:block absolute left-0 top-full bg-[#1a1a2e] border border-purple-700 shadow-md z-50 min-w-[180px]">
+            <div onClick={() => openWindow({
+              id: 'contact-' + Date.now(),
+              title: 'Contact',
+              icon: '/img/Email.png',
+              component: 'contact',
+              x: 150 + Math.random() * 50,
+              y: 80 + Math.random() * 50,
+              width: 750,
+              height: 550,
+              minWidth: 500,
+              minHeight: 400,
+              isMinimized: false,
+              isMaximized: false,
+            })} className="px-4 py-1 hover:bg-purple-800/50 cursor-pointer">Contact Developer</div>
+            <div className="border-t border-purple-700 my-1" />
+            <div onClick={() => setShowAbout(true)} className="px-4 py-1 hover:bg-purple-800/50 cursor-pointer">About Web3</div>
+          </div>
+        </div>
+      </div>
+
       {/* Wallet Header */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 via-blue-600/20 to-purple-600/20" />
@@ -184,6 +262,36 @@ export function Web3App() {
           <span className="text-xs">Settings</span>
         </button>
       </div>
+
+      {/* About Dialog */}
+      {showAbout && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/60 z-50">
+          <div className="bg-[#1a1a2e] border-2 border-purple-500 shadow-lg p-4 min-w-[350px] text-gray-200 rounded-lg">
+            <div className="flex items-center gap-3 mb-4">
+              <img src="/img/Internet Connection Wizard.png" alt="Web3" className="w-12 h-12" />
+              <div>
+                <div className="font-bold text-purple-400">Web3 Wallet</div>
+                <div className="text-xs text-gray-400">Blockchain Interface v2.0</div>
+              </div>
+            </div>
+            <div className="text-xs mb-4 space-y-2">
+              <p>🔮 <strong>Fun Fact:</strong> The first Bitcoin transaction was 10,000 BTC for two pizzas!</p>
+              <p>💎 <strong>Easter Egg:</strong> The balance shown is 42.069 ETH - the meme number combo!</p>
+              <p>🏠 <strong>Project:</strong> LandLord - Real estate tokenization platform</p>
+              <p>⚡ <strong>Stack:</strong> Solidity, Web3.js, Ethers.js, Hardhat</p>
+              <p className="text-gray-500 italic mt-2">"Not your keys, not your coins." - Every crypto enthusiast ever</p>
+            </div>
+            <div className="flex justify-end">
+              <button
+                onClick={() => setShowAbout(false)}
+                className="px-4 py-1 bg-purple-600 hover:bg-purple-500 border border-purple-400 rounded text-xs text-white"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
