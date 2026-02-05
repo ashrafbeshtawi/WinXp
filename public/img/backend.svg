@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" width="200" height="150">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="backendBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f0f1a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="serverGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4a4a5a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a2a3a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <rect width="200" height="150" fill="url(#backendBg)" rx="4"/>
+
+  <!-- Server rack -->
+  <rect x="30" y="25" width="60" height="100" fill="url(#serverGrad)" stroke="#555" stroke-width="2" rx="3"/>
+
+  <!-- Server units -->
+  <rect x="35" y="30" width="50" height="18" fill="#2d2d3d" stroke="#444" rx="2"/>
+  <rect x="35" y="52" width="50" height="18" fill="#2d2d3d" stroke="#444" rx="2"/>
+  <rect x="35" y="74" width="50" height="18" fill="#2d2d3d" stroke="#444" rx="2"/>
+  <rect x="35" y="96" width="50" height="18" fill="#2d2d3d" stroke="#444" rx="2"/>
+
+  <!-- Server LEDs -->
+  <circle cx="42" cy="39" r="3" fill="#22c55e"/>
+  <circle cx="52" cy="39" r="3" fill="#22c55e"/>
+  <circle cx="62" cy="39" r="2" fill="#f59e0b"/>
+
+  <circle cx="42" cy="61" r="3" fill="#22c55e"/>
+  <circle cx="52" cy="61" r="3" fill="#22c55e"/>
+  <circle cx="62" cy="61" r="2" fill="#22c55e"/>
+
+  <circle cx="42" cy="83" r="3" fill="#22c55e"/>
+  <circle cx="52" cy="83" r="3" fill="#ef4444"/>
+  <circle cx="62" cy="83" r="2" fill="#22c55e"/>
+
+  <circle cx="42" cy="105" r="3" fill="#22c55e"/>
+  <circle cx="52" cy="105" r="3" fill="#22c55e"/>
+  <circle cx="62" cy="105" r="2" fill="#22c55e"/>
+
+  <!-- Server vents -->
+  <line x1="70" y1="33" x2="80" y2="33" stroke="#555" stroke-width="1"/>
+  <line x1="70" y1="37" x2="80" y2="37" stroke="#555" stroke-width="1"/>
+  <line x1="70" y1="41" x2="80" y2="41" stroke="#555" stroke-width="1"/>
+
+  <!-- Terminal window -->
+  <rect x="105" y="25" width="75" height="70" fill="#0d0d0d" stroke="#333" stroke-width="2" rx="3"/>
+
+  <!-- Terminal header -->
+  <rect x="105" y="25" width="75" height="14" fill="#333" rx="3"/>
+  <rect x="105" y="36" width="75" height="3" fill="#333"/>
+  <circle cx="113" cy="32" r="3" fill="#ff5f57"/>
+  <circle cx="123" cy="32" r="3" fill="#febc2e"/>
+  <circle cx="133" cy="32" r="3" fill="#28c840"/>
+
+  <!-- Terminal text -->
+  <text x="110" y="52" font-family="monospace" font-size="6" fill="#22c55e">$ php artisan</text>
+  <text x="110" y="62" font-family="monospace" font-size="6" fill="#22c55e">$ symfony serve</text>
+  <text x="110" y="72" font-family="monospace" font-size="6" fill="#f59e0b">[OK] Running</text>
+  <text x="110" y="82" font-family="monospace" font-size="6" fill="#22c55e">$_</text>
+
+  <!-- Database icon -->
+  <ellipse cx="142" cy="110" rx="20" ry="8" fill="#3b82f6"/>
+  <rect x="122" y="110" width="40" height="20" fill="#3b82f6"/>
+  <ellipse cx="142" cy="130" rx="20" ry="8" fill="#2563eb"/>
+  <ellipse cx="142" cy="110" rx="20" ry="8" fill="#60a5fa"/>
+  <ellipse cx="142" cy="118" rx="20" ry="8" fill="none" stroke="#93c5fd" stroke-width="1"/>
+
+  <!-- Connection lines -->
+  <path d="M90 50 L105 50" stroke="#22c55e" stroke-width="1" stroke-dasharray="2,2"/>
+  <path d="M90 70 L105 70" stroke="#22c55e" stroke-width="1" stroke-dasharray="2,2"/>
+</svg>
