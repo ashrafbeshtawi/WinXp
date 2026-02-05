@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Tahoma';
+  src: local('Tahoma');
+}
+
+:root {
+  --xp-blue: #0055e5;
+  --xp-blue-dark: #0044cc;
+  --xp-taskbar: #235adb;
+  --xp-taskbar-dark: #1034a6;
+  --xp-start-green: #3c8f3c;
+  --xp-window-active: linear-gradient(180deg, #0058e6 0%, #3a93ff 3%, #288eff 6%, #127dff 10%, #036ffc 14%, #0262ee 20%, #0057e5 24%, #0054e3 28%, #0054e3 34%, #0055e5 50%, #005aea 70%, #005aea 78%, #005aea 86%, #0060ef 90%, #0060ef 94%, #0063f1 100%);
+  --xp-window-inactive: linear-gradient(180deg, #7a96df 0%, #a8c0ef 3%, #9ab8e9 6%, #8caee3 14%, #7ba3dc 20%, #7ba3dc 24%, #7aa1db 28%, #7aa1db 50%, #7ea5de 70%, #7ea5de 78%, #82a9e0 86%, #84abe1 90%, #87ade3 94%, #8ab0e5 100%);
+  --xp-button: linear-gradient(180deg, #fff 0%, #ecebe5 85%, #d8d0c4 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  font-family: 'Tahoma', 'Segoe UI', sans-serif;
+  font-size: 11px;
+  user-select: none;
+}
+
+/* XP Button Style */
+.xp-button {
+  background: var(--xp-button);
+  border: 1px solid #003c74;
+  border-radius: 3px;
+  padding: 2px 10px;
+  font-size: 11px;
+  cursor: pointer;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
+}
+
+.xp-button:active {
+  box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #808080;
+}
+
+/* Scrollbar XP Style */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1efe2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #ece9d8 0%, #fff 50%, #ece9d8 100%);
+  border: 1px solid #919b9c;
+}
+
+::-webkit-scrollbar-button {
+  background: #ece9d8;
+  border: 1px solid #919b9c;
+}
