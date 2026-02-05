@@ -2,16 +2,21 @@
 
 import { useEffect } from 'react';
 import { useBootStore } from '@/stores/bootStore';
+import { useAudio } from '@/hooks/useAudio';
 
 export function WelcomeScreen() {
   const setPhase = useBootStore((state) => state.setPhase);
+  const { play } = useAudio();
 
   useEffect(() => {
+    // Play startup sound when welcome screen appears
+    play('startup');
+
     const timer = setTimeout(() => {
       setPhase('desktop');
     }, 1500);
     return () => clearTimeout(timer);
-  }, [setPhase]);
+  }, [setPhase, play]);
 
   return (
     <div className="h-screen w-screen bg-[#5a7edc] flex items-center justify-center">
