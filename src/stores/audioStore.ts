@@ -14,7 +14,7 @@ export const useAudioStore = create<AudioState>()(
       isMuted: true,
       volume: 0.5,
       toggleMute: () => set({ isMuted: !get().isMuted }),
-      setVolume: (volume) => set({ volume }),
+      setVolume: (volume) => set({ volume: Math.max(0, Math.min(1, volume)) }),
     }),
     {
       name: 'ashraf-os-audio',

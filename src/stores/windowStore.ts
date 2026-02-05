@@ -92,18 +92,23 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
   },
 
   updateWindowPosition: (id, x, y) => {
+    const clampedX = Math.max(0, x);
+    const clampedY = Math.max(0, y);
     set({
       windows: get().windows.map((w) =>
-        w.id === id ? { ...w, x, y } : w
+        w.id === id ? { ...w, x: clampedX, y: clampedY } : w
       ),
     });
   },
 
   updateWindowSize: (id, width, height) => {
     set({
-      windows: get().windows.map((w) =>
-        w.id === id ? { ...w, width, height } : w
-      ),
+      windows: get().windows.map((w) => {
+        if (w.id !== id) return w;
+        const clampedWidth = Math.max(w.minWidth, width);
+        const clampedHeight = Math.max(w.minHeight, height);
+        return { ...w, width: clampedWidth, height: clampedHeight };
+      }),
     });
   },
 }));
