@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Wallpaper } from './Wallpaper';
 import { DesktopIcons } from './DesktopIcons';
 import { Taskbar } from '@/components/taskbar/Taskbar';
+import { StartMenu } from '@/components/startmenu/StartMenu';
 
 interface DesktopProps {
   children?: React.ReactNode;
@@ -22,6 +23,7 @@ export function Desktop({ children }: DesktopProps) {
         <DesktopIcons />
         {children}
       </div>
+      <StartMenu isOpen={isStartMenuOpen} onClose={() => setIsStartMenuOpen(false)} />
       <Taskbar
         isStartMenuOpen={isStartMenuOpen}
         onStartClick={() => setIsStartMenuOpen(!isStartMenuOpen)}
