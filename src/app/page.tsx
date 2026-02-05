@@ -1,15 +1,16 @@
 'use client';
 
 import { BootSequence } from '@/components/boot/BootSequence';
+import { Desktop } from '@/components/desktop/Desktop';
 
 export default function Home() {
   return (
     <BootSequence>
-      <main className="h-screen w-screen bg-[#3a6ea5]">
-        <div className="flex items-center justify-center h-full text-white text-2xl">
-          Desktop coming soon...
+      <Desktop>
+        <div className="p-2 text-white text-shadow">
+          Desktop icons will go here
         </div>
-      </main>
+      </Desktop>
     </BootSequence>
   );
 }
