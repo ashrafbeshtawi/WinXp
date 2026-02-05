@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💾 Ashraf OS - Windows XP Portfolio
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║  Microsoft Windows XP Professional                                ║
+║  Build 2600.xpsp_sp3_qfe                                         ║
+║  Copyright (c) 1985-2024 Ashraf Beshtawi. All rights reserved.   ║
+╚═══════════════════════════════════════════════════════════════════╝
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> *"Your portfolio is running low on disk space. Would you like Windows to free up space by showcasing your skills?"*
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🖥️ What is this?
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+A fully interactive **Windows XP** themed portfolio website that takes you back to the golden era of computing. Complete with draggable desktop icons, working windows, authentic sound effects, and that nostalgic Bliss wallpaper.
 
-## Learn More
+**[🚀 Live Demo](https://winxp.vercel.app)** *(coming soon)*
 
-To learn more about Next.js, take a look at the following resources:
+## ✨ Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Feature | Status |
+|---------|--------|
+| 🪟 Draggable, resizable windows | ✅ |
+| 🖱️ Drag & drop desktop icons | ✅ |
+| 📂 Working file explorer | ✅ |
+| 🎵 Authentic XP sound effects | ✅ |
+| 🚀 Start menu with programs | ✅ |
+| ⏰ System tray with clock | ✅ |
+| 🔊 Volume control | ✅ |
+| 📝 Notepad app | ✅ |
+| 💣 Minesweeper game | ✅ |
+| 📧 Outlook with easter eggs | ✅ |
+| 🔐 XP-style login screen | ✅ |
+| 🗑️ Recycle Bin | ✅ |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🎯 Portfolio Sections
 
-## Deploy on Vercel
+- **Frontend.exe** - React, Next.js, TypeScript, and modern web technologies
+- **Backend.exe** - Node.js, APIs, databases, and server-side magic
+- **Web3.exe** - Blockchain, smart contracts, and decentralized applications
+- **AI.exe** - Machine learning, LLMs, and AI integrations
+- **Contact.exe** - Get in touch (Outlook-style with funny easter eggs!)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠️ Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+C:\> systeminfo
+
+OS Name:           Next.js 16.1.6 with Turbopack
+Framework:         React 19
+Styling:           Tailwind CSS + xp.css
+State Management:  Zustand
+Audio:             Howler.js
+Language:          TypeScript
+Package Manager:   npm
+```
+
+## 🚀 Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/ashrafbeshtawi/WinXp.git
+
+# Navigate to the directory
+cd WinXp
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+
+Then open [http://localhost:3000](http://localhost:3000) and prepare for nostalgia.
+
+## 📁 Project Structure
+
+```
+C:\WinXp\
+├── 📂 public/
+│   ├── 📂 img/          # XP icons and images
+│   ├── 📂 sounds/       # System sounds (startup, click, error)
+│   └── 📂 wallpaper/    # The legendary Bliss wallpaper
+├── 📂 src/
+│   ├── 📂 app/          # Next.js app router
+│   ├── 📂 components/
+│   │   ├── 📂 apps/     # Window applications
+│   │   ├── 📂 boot/     # Boot & login screens
+│   │   ├── 📂 desktop/  # Desktop & icons
+│   │   ├── 📂 taskbar/  # Taskbar components
+│   │   └── 📂 windows/  # Window management
+│   ├── 📂 data/         # Desktop items & file system
+│   ├── 📂 hooks/        # Custom React hooks
+│   └── 📂 stores/       # Zustand state stores
+└── 📄 package.json
+```
+
+## 🎮 Easter Eggs
+
+- 🔍 Check the Outlook drafts folder...
+- 🗑️ Look in the Recycle Bin...
+- 🔐 Explore Secret Projects...
+- 💣 Try to beat Minesweeper!
+
+## 📜 License
+
+This project is open source and available under the MIT License.
+
+---
+
+<div align="center">
+
+**Built with 💙 and mass nostalgia by [Ashraf Beshtawi](https://github.com/ashrafbeshtawi)**
+
+*"It looks like you're building a portfolio. Would you like help?"* 📎
+
+</div>
