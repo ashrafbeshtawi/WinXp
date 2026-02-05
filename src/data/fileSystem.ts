@@ -11,6 +11,13 @@ export interface FileItem {
 
 export const fileSystem: FileItem[] = [
   {
+    id: 'recycle-bin',
+    name: 'Recycle Bin',
+    type: 'folder',
+    icon: '🗑️',
+    children: [],
+  },
+  {
     id: 'my-computer',
     name: 'My Computer',
     type: 'folder',

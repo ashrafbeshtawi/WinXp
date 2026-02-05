@@ -15,6 +15,7 @@ interface AppContentProps {
 export function AppContent({ component, windowId }: AppContentProps) {
   switch (component) {
     case 'frontend':
+    case 'ie':
       return <FrontendApp />;
     case 'backend':
       return <BackendApp />;
@@ -35,28 +36,7 @@ export function AppContent({ component, windowId }: AppContentProps) {
     case 'my-documents':
       return <ExplorerApp initialPath="my-documents" />;
     case 'recycle-bin':
-      return (
-        <div className="h-full flex flex-col bg-white">
-          {/* Menu Bar */}
-          <div className="flex items-center px-2 py-1 bg-[#ece9d8] border-b border-[#919b9c] text-xs">
-            <span className="px-2 hover:bg-[#316ac5] hover:text-white cursor-pointer">File</span>
-            <span className="px-2 hover:bg-[#316ac5] hover:text-white cursor-pointer">Edit</span>
-            <span className="px-2 hover:bg-[#316ac5] hover:text-white cursor-pointer">View</span>
-            <span className="px-2 hover:bg-[#316ac5] hover:text-white cursor-pointer">Help</span>
-          </div>
-          {/* Content */}
-          <div className="flex-1 flex items-center justify-center text-gray-500">
-            <div className="text-center">
-              <span className="text-6xl block mb-4">🗑️</span>
-              <p className="text-sm">Recycle Bin is empty</p>
-            </div>
-          </div>
-          {/* Status Bar */}
-          <div className="px-2 py-1 bg-[#ece9d8] border-t border-[#919b9c] text-xs text-gray-600">
-            0 object(s)
-          </div>
-        </div>
-      );
+      return <ExplorerApp initialPath="recycle-bin" />;
     default:
       return (
         <div className="p-4">
