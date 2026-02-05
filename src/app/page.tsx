@@ -2,14 +2,13 @@
 
 import { BootSequence } from '@/components/boot/BootSequence';
 import { Desktop } from '@/components/desktop/Desktop';
+import { WindowManager } from '@/components/windows/WindowManager';
 
 export default function Home() {
   return (
     <BootSequence>
       <Desktop>
-        <div className="p-2 text-white text-shadow">
-          Desktop icons will go here
-        </div>
+        <WindowManager />
       </Desktop>
     </BootSequence>
   );
