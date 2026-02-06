@@ -123,22 +123,22 @@ function Cell({
   const renderContent = () => {
     if (cell.isFlagged && !cell.isRevealed) {
       if (gameState === 'lost' && !cell.isMine) {
-        return <span className="text-black text-xs">❌</span>;
+        return <span className="text-[10px] leading-none">❌</span>;
       }
-      return <span className="text-red-600 text-xs">🚩</span>;
+      return <span className="text-[11px] leading-none">🚩</span>;
     }
     if (!cell.isRevealed) {
       if (gameState === 'lost' && cell.isMine) {
-        return <span className="text-xs">💣</span>;
+        return <span className="text-[11px] leading-none">💣</span>;
       }
       return null;
     }
     if (cell.isMine) {
-      return <span className="text-xs">💣</span>;
+      return <span className="text-[11px] leading-none">💣</span>;
     }
     if (cell.adjacentMines > 0) {
       return (
-        <span className={`font-bold text-xs ${getNumberColor(cell.adjacentMines)}`}>
+        <span className={`font-bold text-[11px] leading-none ${getNumberColor(cell.adjacentMines)}`}>
           {cell.adjacentMines}
         </span>
       );
@@ -146,17 +146,17 @@ function Cell({
     return null;
   };
 
-  const baseStyle = "w-4 h-4 flex items-center justify-center text-xs select-none";
+  const baseStyle = "w-5 h-5 flex items-center justify-center text-[11px] select-none";
 
   if (cell.isRevealed) {
     return (
       <div
-        className={`${baseStyle} bg-[#c0c0c0] border border-[#808080]`}
+        className={`${baseStyle} bg-[#bdbdbd]`}
         style={{
           borderWidth: '1px',
           borderStyle: 'solid',
-          borderColor: '#808080',
-          backgroundColor: cell.isMine && cell.isRevealed && gameState === 'lost' ? '#ff0000' : '#c0c0c0',
+          borderColor: '#7b7b7b',
+          backgroundColor: cell.isMine && cell.isRevealed && gameState === 'lost' ? '#ff0000' : '#bdbdbd',
         }}
       >
         {renderContent()}
@@ -166,11 +166,11 @@ function Cell({
 
   return (
     <button
-      className={`${baseStyle} bg-[#c0c0c0] active:border-[#808080]`}
+      className={`${baseStyle} bg-[#c0c0c0] active:bg-[#bdbdbd]`}
       style={{
-        borderWidth: '2px',
-        borderStyle: 'outset',
-        borderColor: '#ffffff #808080 #808080 #ffffff',
+        borderWidth: '3px',
+        borderStyle: 'solid',
+        borderColor: '#ffffff #7b7b7b #7b7b7b #ffffff',
       }}
       onClick={onClick}
       onContextMenu={onRightClick}

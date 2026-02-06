@@ -100,29 +100,29 @@ export function FrontendApp() {
       </div>
 
       {/* Toolbar */}
-      <div className="flex items-center gap-1 px-2 py-1 bg-gradient-to-b from-[#f5f4f0] to-[#e3e3db] border-b border-[#919b9c]">
-        <button className="flex flex-col items-center px-2 py-1 hover:bg-[#c1d2ee] rounded text-xs">
-          <span className="text-lg">⬅️</span>
+      <div className="flex items-center gap-0.5 px-1 py-0.5 bg-gradient-to-b from-[#f5f4f0] to-[#e3e3db] border-b border-[#919b9c]">
+        <button className="flex items-center gap-1 px-1.5 py-0.5 hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5] rounded text-[10px] opacity-50">
+          <img src="/img/Back.png" alt="Back" className="w-5 h-5 object-contain" />
           <span>Back</span>
         </button>
-        <button className="flex flex-col items-center px-2 py-1 hover:bg-[#c1d2ee] rounded text-xs">
-          <span className="text-lg">➡️</span>
-          <span>Forward</span>
+        <button className="flex items-center gap-1 px-1.5 py-0.5 hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5] rounded text-[10px] opacity-50">
+          <img src="/img/Forward.png" alt="Forward" className="w-5 h-5 object-contain" />
         </button>
-        <button className="flex flex-col items-center px-2 py-1 hover:bg-[#c1d2ee] rounded text-xs">
-          <span className="text-lg">🔄</span>
-          <span>Refresh</span>
+        <button
+          onClick={() => window.location.reload()}
+          className="flex items-center gap-1 px-1.5 py-0.5 hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5] rounded text-[10px]"
+        >
+          <img src="/img/IE Refresh.png" alt="Refresh" className="w-5 h-5 object-contain" />
         </button>
-        <button className="flex flex-col items-center px-2 py-1 hover:bg-[#c1d2ee] rounded text-xs">
-          <span className="text-lg">🏠</span>
-          <span>Home</span>
+        <button className="flex items-center gap-1 px-1.5 py-0.5 hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5] rounded text-[10px]">
+          <img src="/img/IE Home.png" alt="Home" className="w-5 h-5 object-contain" />
         </button>
-        <div className="w-px h-8 bg-[#919b9c] mx-2" />
+        <div className="w-px h-6 bg-[#919b9c] mx-1" />
         <button
           onClick={() => setShowFavorites(!showFavorites)}
-          className={`flex flex-col items-center px-2 py-1 rounded text-xs ${showFavorites ? 'bg-[#c1d2ee]' : 'hover:bg-[#c1d2ee]'}`}
+          className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] ${showFavorites ? 'bg-[#c1d2ee] border border-[#316ac5]' : 'hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5]'}`}
         >
-          <span className="text-lg">⭐</span>
+          <img src="/img/Favorites.png" alt="Favorites" className="w-5 h-5 object-contain" />
           <span>Favorites</span>
         </button>
       </div>
