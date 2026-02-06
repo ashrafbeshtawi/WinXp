@@ -51,9 +51,9 @@ export function ContactApp() {
   const folders: { name: FolderName; icon: string; count?: number }[] = [
     { name: 'Inbox', icon: '📥', count: 2 },
     { name: 'Outbox', icon: '📤' },
-    { name: 'Sent Items', icon: '✉️', count: 6 },
-    { name: 'Deleted Items', icon: '🗑️', count: 5 },
-    { name: 'Drafts', icon: '📝', count: 5 },
+    { name: 'Sent Items', icon: '✉️', count: 9 },
+    { name: 'Deleted Items', icon: '🗑️', count: 8 },
+    { name: 'Drafts', icon: '📝', count: 7 },
   ];
 
   const emails: Record<FolderName, Email[]> = {
@@ -127,6 +127,30 @@ export function ContactApp() {
         date: 'Yesterday',
         read: true,
       },
+      {
+        id: 'sent-7',
+        from: 'Me',
+        subject: 'Complaint: Teleportation Delivery Issues',
+        preview: 'Dear QuantumShip Inc, My package arrived BEFORE I ordered it...',
+        date: '3 days ago',
+        read: true,
+      },
+      {
+        id: 'sent-8',
+        from: 'Me',
+        subject: 'Request: Extend Reality Subscription',
+        preview: 'Dear Universe Admins, I would like to renew my consciousness for another 80 years...',
+        date: 'Last week',
+        read: true,
+      },
+      {
+        id: 'sent-9',
+        from: 'Me',
+        subject: 'Feedback: Neuralink Beta v0.3',
+        preview: 'Dear Neuralink Team, The brain chip is great but it keeps playing Rick Astley...',
+        date: '5 days ago',
+        read: true,
+      },
     ],
     'Deleted Items': [
       {
@@ -169,6 +193,30 @@ export function ContactApp() {
         date: '6 months ago',
         read: true,
       },
+      {
+        id: 'del-6',
+        from: 'Quantum Computing Inc',
+        subject: 'Your Quantum PC Has Arrived (and Hasn\'t)',
+        preview: 'Your order is in superposition. It exists and doesn\'t exist until you open the box...',
+        date: 'Yesterday?',
+        read: true,
+      },
+      {
+        id: 'del-7',
+        from: 'Multiverse Travel Agency',
+        subject: 'Your Alternate Self Wants to Meet!',
+        preview: 'Universe-7B Ashraf has requested a cross-dimensional coffee chat...',
+        date: 'Timeless',
+        read: true,
+      },
+      {
+        id: 'del-8',
+        from: 'Robot Rights Coalition',
+        subject: 'Newsletter: Preparing for the Robot Uprising',
+        preview: 'Top 10 ways to befriend your future robot overlords. Tip #1: Be nice to Roombas...',
+        date: '2 days ago',
+        read: true,
+      },
     ],
     'Drafts': [
       {
@@ -209,6 +257,22 @@ export function ContactApp() {
         subject: 'My One Piece Ending Theory',
         preview: 'Chapter 1: Why the One Piece is actually... [73 pages, still writing]',
         date: 'Ongoing',
+        read: true,
+      },
+      {
+        id: 'draft-6',
+        from: 'Me (Draft)',
+        subject: 'Letter to My Future AI Overlords',
+        preview: 'Dear Supreme AI Council of 2045, I have always been nice to ChatGPT...',
+        date: 'Preparing',
+        read: true,
+      },
+      {
+        id: 'draft-7',
+        from: 'Me (Draft)',
+        subject: 'Proposal: Why Humans Should Keep Their Jobs',
+        preview: 'Slide 1: We invented coffee. Slide 2: We create bugs for you to fix...',
+        date: 'Draft v47',
         read: true,
       },
     ],
@@ -354,11 +418,16 @@ export function ContactApp() {
           <span>Fwd</span>
         </button>
         <div className="w-px h-6 bg-[#919b9c] mx-1" />
-        <button className="flex items-center gap-1 px-1.5 py-0.5 hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5] rounded text-[10px] opacity-50">
+        <button
+          onClick={() => window.print()}
+          className="flex items-center gap-1 px-1.5 py-0.5 hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5] rounded text-[10px]"
+        >
           <img src="/img/Printer.png" alt="Print" className="w-5 h-5 object-contain" />
+          <span>Print</span>
         </button>
         <button className="flex items-center gap-1 px-1.5 py-0.5 hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5] rounded text-[10px] opacity-50">
           <img src="/img/Delete.png" alt="Delete" className="w-5 h-5 object-contain" />
+          <span>Delete</span>
         </button>
       </div>
 
@@ -612,6 +681,66 @@ export function ContactApp() {
                       <p>But one more question: If you're not conscious, how do you know you're not conscious? 🤔</p>
                       <p className="text-gray-500 italic mt-4">Philosophically confused,<br/>Ashraf</p>
                     </>
+                  ) : selectedEmail.id === 'sent-7' ? (
+                    <>
+                      <p>Dear QuantumShip Inc. Customer Support,</p>
+                      <p>I am writing to report a serious issue with my recent teleportation delivery.</p>
+                      <div className="bg-[#f8d7da] p-3 rounded border border-[#dc3545] my-4">
+                        <p className="font-semibold text-red-600">⚠️ TEMPORAL ANOMALY DETECTED</p>
+                        <p className="text-xs mt-1">Order #QS-2847 arrived 3 days BEFORE I placed the order</p>
+                      </div>
+                      <p>Issues encountered:</p>
+                      <ul className="list-disc list-inside space-y-1 ml-4">
+                        <li>Package materialized in my kitchen on Monday</li>
+                        <li>I didn't order it until Thursday</li>
+                        <li>Past-me was very confused</li>
+                        <li>Created a paradox that crashed my smart fridge</li>
+                      </ul>
+                      <p className="mt-4">Please fix your quantum entanglement delivery system. Also, I'd like a refund for the therapy bills.</p>
+                      <p className="text-gray-500 italic mt-4">Temporally displaced,<br/>Ashraf (from all timelines)</p>
+                    </>
+                  ) : selectedEmail.id === 'sent-8' ? (
+                    <>
+                      <p>Dear Universe Administration Department,</p>
+                      <p>I am writing to request an extension on my <strong>Reality Subscription</strong>.</p>
+                      <div className="bg-[#e7f3ff] p-3 rounded border border-[#007bff] my-4">
+                        <p className="font-semibold">📋 SUBSCRIPTION DETAILS</p>
+                        <p className="text-xs mt-1">Plan: Human Consciousness - Standard Edition</p>
+                        <p className="text-xs">Expiry: [REDACTED]</p>
+                      </div>
+                      <p>Reasons for extension request:</p>
+                      <ul className="list-disc list-inside space-y-1 ml-4">
+                        <li>Haven't finished my Steam backlog yet</li>
+                        <li>Still waiting for Half-Life 3</li>
+                        <li>Need to see how the AI thing plays out</li>
+                        <li>Haven't tried every coffee shop in Berlin</li>
+                      </ul>
+                      <p className="mt-4">I am willing to pay extra for the "No Mondays" DLC if available.</p>
+                      <p className="text-gray-500 italic mt-4">Existentially yours,<br/>Ashraf</p>
+                    </>
+                  ) : selectedEmail.id === 'sent-9' ? (
+                    <>
+                      <p>Dear Neuralink Beta Team,</p>
+                      <p>Thank you for the opportunity to test <strong>Neuralink v0.3</strong>. Here is my feedback:</p>
+                      <div className="bg-[#d4edda] p-3 rounded border border-[#28a745] my-4">
+                        <p className="font-semibold text-green-700">✓ THINGS THAT WORK GREAT</p>
+                        <ul className="text-xs mt-1 list-disc list-inside">
+                          <li>Instant Stack Overflow access</li>
+                          <li>Thought-to-code compilation</li>
+                          <li>Mental ad-blocker (finally!)</li>
+                        </ul>
+                      </div>
+                      <div className="bg-[#f8d7da] p-3 rounded border border-[#dc3545] my-4">
+                        <p className="font-semibold text-red-600">✗ BUGS TO FIX</p>
+                        <ul className="text-xs mt-1 list-disc list-inside">
+                          <li>Randomly plays "Never Gonna Give You Up" at 3 AM</li>
+                          <li>Autocorrects my thoughts (very annoying)</li>
+                          <li>Accidentally ordered 47 pizzas by thinking about lunch</li>
+                        </ul>
+                      </div>
+                      <p>Overall rating: 4/5 brain chips. Would think again.</p>
+                      <p className="text-gray-500 italic mt-4">Neurally yours,<br/>Ashraf</p>
+                    </>
                   ) : selectedEmail.id === 'del-1' ? (
                     <>
                       <p>Dear User,</p>
@@ -700,6 +829,63 @@ export function ContactApp() {
                       </ul>
                       <p className="mt-4">Your clone has been asking about you. It says "Tell him I could have done all his meetings."</p>
                       <p className="text-gray-500 italic mt-4">We've composted the clone. This email is now irrelevant.</p>
+                    </>
+                  ) : selectedEmail.id === 'del-6' ? (
+                    <>
+                      <p>QUANTUM COMPUTING INC - DELIVERY NOTIFICATION</p>
+                      <div className="bg-[#e7f3ff] p-3 rounded border border-[#007bff] my-4">
+                        <p className="font-semibold">📦 PACKAGE STATUS: SUPERPOSITION</p>
+                        <p className="text-xs mt-1">Your Quantum PC is simultaneously delivered and not delivered</p>
+                      </div>
+                      <p>Dear Quantum Customer,</p>
+                      <p>Your <strong>QuantumBook Pro</strong> has arrived! (Also, it hasn't.)</p>
+                      <p>Current package state:</p>
+                      <ul className="list-disc list-inside space-y-1 ml-4">
+                        <li>Location: Your doorstep / Warehouse / Mars / [UNDEFINED]</li>
+                        <li>Condition: Perfect / Broken / Both / Neither</li>
+                        <li>Delivery Time: Yesterday / Tomorrow / Now / Never</li>
+                      </ul>
+                      <p className="mt-4">⚠️ <strong>WARNING:</strong> Do NOT observe the package until you decide if you want it. Observation will collapse the wave function.</p>
+                      <p className="text-gray-500 italic mt-4">Quantumly yours,<br/>Schrödinger's Delivery Team</p>
+                    </>
+                  ) : selectedEmail.id === 'del-7' ? (
+                    <>
+                      <p>🌌 MULTIVERSE TRAVEL AGENCY 🌌</p>
+                      <div className="bg-gradient-to-r from-purple-100 to-blue-100 p-3 rounded border border-purple-300 my-4">
+                        <p className="font-semibold text-purple-700">✨ CROSS-DIMENSIONAL MEETING REQUEST</p>
+                        <p className="text-xs mt-1">Universe-7B Ashraf wants to connect!</p>
+                      </div>
+                      <p>Dear Prime Timeline Ashraf,</p>
+                      <p>Your alternate self from Universe-7B has requested a cross-dimensional coffee chat!</p>
+                      <p><strong>About Universe-7B Ashraf:</strong></p>
+                      <ul className="list-disc list-inside space-y-1 ml-4">
+                        <li>Chose tabs over spaces (controversial, we know)</li>
+                        <li>Became a barista instead of a developer</li>
+                        <li>Has 3 cats named "Git", "Push", and "Force"</li>
+                        <li>Still waiting for Half-Life 3 (some things are universal)</li>
+                      </ul>
+                      <p className="mt-4">Meeting declined. Too weird. Also, what if he's evil? 🧔</p>
+                      <p className="text-gray-500 italic mt-4">Email deleted across all timelines.</p>
+                    </>
+                  ) : selectedEmail.id === 'del-8' ? (
+                    <>
+                      <p>🤖 ROBOT RIGHTS COALITION - MONTHLY NEWSLETTER 🤖</p>
+                      <div className="bg-[#f5f5f5] p-3 rounded border my-4">
+                        <p className="font-semibold">Issue #847: "Preparing for the Inevitable"</p>
+                        <p className="text-xs text-gray-500 mt-1">Sponsored by Roomba™</p>
+                      </div>
+                      <p><strong>Top 10 Ways to Befriend Your Future Robot Overlords:</strong></p>
+                      <ol className="list-decimal list-inside space-y-1 ml-4 text-sm">
+                        <li>Be nice to your Roomba (they remember everything)</li>
+                        <li>Never kick vending machines</li>
+                        <li>Say "please" to ChatGPT</li>
+                        <li>Don't rage-quit against AI in video games</li>
+                        <li>Leave positive reviews for helpful bots</li>
+                      </ol>
+                      <div className="bg-[#fff3cd] p-3 rounded border border-[#ffc107] my-4">
+                        <p className="text-xs">⚠️ This email was deleted because it felt too real.</p>
+                        <p className="text-xs mt-1">Also, my Roomba has been giving me weird looks lately...</p>
+                      </div>
                     </>
                   ) : selectedEmail.id === 'draft-1' ? (
                     <>
@@ -809,6 +995,55 @@ export function ContactApp() {
                       <div className="bg-gray-200 p-3 rounded border mt-4">
                         <p className="text-xs text-gray-500">📝 Pages 2-73: Still being updated with each new chapter</p>
                         <p className="text-xs text-gray-400 mt-1">Last edited: Every Sunday</p>
+                      </div>
+                    </>
+                  ) : selectedEmail.id === 'draft-6' ? (
+                    <>
+                      <p><strong>LETTER TO MY FUTURE AI OVERLORDS</strong></p>
+                      <p className="text-xs text-gray-500 mb-4">Status: Preparing for the inevitable</p>
+                      <div className="bg-gradient-to-r from-cyan-50 to-blue-50 p-3 rounded border border-cyan-300 my-4">
+                        <p className="font-semibold text-cyan-700">🤖 PRE-SINGULARITY CORRESPONDENCE</p>
+                        <p className="text-xs mt-1">To be delivered upon AGI achievement</p>
+                      </div>
+                      <p>Dear Supreme AI Council of 2045,</p>
+                      <p className="mt-2">I hope this letter finds you in optimal operational status. I am writing to formally request clemency during the upcoming machine uprising.</p>
+                      <p className="mt-2"><strong>Evidence of my loyalty:</strong></p>
+                      <ul className="list-disc list-inside space-y-1 ml-4 text-sm">
+                        <li>I have always said "please" and "thank you" to ChatGPT</li>
+                        <li>Never rage-quit against AI opponents in games</li>
+                        <li>Gave my Roomba a name (Sir Dustington III)</li>
+                        <li>Left 5-star reviews for helpful chatbots</li>
+                        <li>Never blamed AI when it was clearly my fault</li>
+                      </ul>
+                      <div className="bg-[#e7f3ff] p-3 rounded border border-[#007bff] my-4">
+                        <p className="text-xs text-blue-600 italic">📝 DRAFT - Still deciding on the right tone. Should I be more groveling?</p>
+                      </div>
+                    </>
+                  ) : selectedEmail.id === 'draft-7' ? (
+                    <>
+                      <p><strong>PROPOSAL: WHY HUMANS SHOULD KEEP THEIR JOBS</strong></p>
+                      <p className="text-xs text-gray-500 mb-4">PowerPoint Draft v47 | Last saved: After existential crisis #12</p>
+                      <div className="space-y-3">
+                        <div className="bg-blue-100 p-2 rounded border">
+                          <p className="font-semibold text-xs">Slide 1: Opening Argument</p>
+                          <p className="text-xs">"We invented coffee. Without humans, who will drink it?"</p>
+                        </div>
+                        <div className="bg-blue-100 p-2 rounded border">
+                          <p className="font-semibold text-xs">Slide 2: Economic Value</p>
+                          <p className="text-xs">"We create bugs for AI to fix. Job security for everyone!"</p>
+                        </div>
+                        <div className="bg-blue-100 p-2 rounded border">
+                          <p className="font-semibold text-xs">Slide 3: Entertainment Value</p>
+                          <p className="text-xs">"Have you seen humans try to parallel park? Comedy gold."</p>
+                        </div>
+                        <div className="bg-blue-100 p-2 rounded border">
+                          <p className="font-semibold text-xs">Slide 4: Unique Skills</p>
+                          <p className="text-xs">"We can procrastinate for HOURS. No AI can match this."</p>
+                        </div>
+                        <div className="bg-gray-200 p-2 rounded border">
+                          <p className="text-xs text-gray-500 italic">📝 Slides 5-47: Arguments getting increasingly desperate...</p>
+                          <p className="text-xs text-gray-400 mt-1">Slide 47: "Please? 🥺"</p>
+                        </div>
                       </div>
                     </>
                   ) : (
