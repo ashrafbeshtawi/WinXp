@@ -46,7 +46,19 @@ html, body {
   box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #808080;
 }
 
+/* Fix title bar height - add vertical padding for control buttons */
+.title-bar {
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+  min-height: 26px !important;
+}
+
 /* Fix title bar control buttons - override xp.css general button styles */
+.title-bar-controls {
+  margin-top: 1px !important;
+  margin-bottom: 1px !important;
+}
+
 .title-bar-controls button {
   min-width: 21px !important;
   min-height: 21px !important;

@@ -265,44 +265,42 @@ export function ExplorerApp({ initialPath = 'my-computer' }: ExplorerAppProps) {
       </div>
 
       {/* Toolbar */}
-      <div className="flex items-center gap-1 px-2 py-1 bg-gradient-to-b from-[#f5f4f0] to-[#e3e3db] border-b border-[#919b9c]">
+      <div className="flex items-center gap-0.5 px-1 py-0.5 bg-gradient-to-b from-[#f5f4f0] to-[#e3e3db] border-b border-[#919b9c]">
         <button
           onClick={goBack}
           disabled={historyIndex === 0}
-          className={`flex flex-col items-center px-2 py-1 rounded text-xs ${
-            historyIndex === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#c1d2ee]'
+          className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] ${
+            historyIndex === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5]'
           }`}
         >
-          <span className="text-lg">⬅️</span>
+          <img src="/img/Back.png" alt="Back" className="w-5 h-5 object-contain" />
           <span>Back</span>
         </button>
         <button
           onClick={goForward}
           disabled={historyIndex >= history.length - 1}
-          className={`flex flex-col items-center px-2 py-1 rounded text-xs ${
-            historyIndex >= history.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#c1d2ee]'
+          className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] ${
+            historyIndex >= history.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5]'
           }`}
         >
-          <span className="text-lg">➡️</span>
-          <span>Forward</span>
+          <img src="/img/Forward.png" alt="Forward" className="w-5 h-5 object-contain" />
         </button>
         <button
           onClick={goUp}
           disabled={currentPath.length === 0}
-          className={`flex flex-col items-center px-2 py-1 rounded text-xs ${
-            currentPath.length === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#c1d2ee]'
+          className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] ${
+            currentPath.length === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5]'
           }`}
         >
-          <span className="text-lg">📁</span>
-          <span>Up</span>
+          <img src="/img/Up.png" alt="Up" className="w-5 h-5 object-contain" />
         </button>
-        <div className="w-px h-8 bg-[#919b9c] mx-2" />
-        <button className="flex flex-col items-center px-2 py-1 hover:bg-[#c1d2ee] rounded text-xs">
-          <span className="text-lg">🔍</span>
+        <div className="w-px h-6 bg-[#919b9c] mx-1" />
+        <button className="flex items-center gap-1 px-1.5 py-0.5 hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5] rounded text-[10px]">
+          <img src="/img/Search.png" alt="Search" className="w-5 h-5 object-contain" />
           <span>Search</span>
         </button>
-        <button className="flex flex-col items-center px-2 py-1 hover:bg-[#c1d2ee] rounded text-xs">
-          <span className="text-lg">📁</span>
+        <button className="flex items-center gap-1 px-1.5 py-0.5 hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5] rounded text-[10px]">
+          <img src="/img/Folder View.png" alt="Folders" className="w-5 h-5 object-contain" />
           <span>Folders</span>
         </button>
       </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useWindowStore } from '@/stores/windowStore';
 
 interface Email {
@@ -17,14 +17,43 @@ export function ContactApp() {
   const [selectedFolder, setSelectedFolder] = useState<FolderName>('Inbox');
   const [selectedEmail, setSelectedEmail] = useState<Email | null>(null);
   const [showAbout, setShowAbout] = useState(false);
+  const [history, setHistory] = useState<{folder: FolderName, email: Email | null}[]>([{folder: 'Inbox', email: null}]);
+  const [historyIndex, setHistoryIndex] = useState(0);
   const openWindow = useWindowStore((state) => state.openWindow);
+
+  const navigateTo = useCallback((folder: FolderName, email: Email | null = null) => {
+    setSelectedFolder(folder);
+    setSelectedEmail(email);
+    const newHistory = history.slice(0, historyIndex + 1);
+    newHistory.push({folder, email});
+    setHistory(newHistory);
+    setHistoryIndex(newHistory.length - 1);
+  }, [history, historyIndex]);
+
+  const goBack = useCallback(() => {
+    if (historyIndex > 0) {
+      setHistoryIndex(historyIndex - 1);
+      const prev = history[historyIndex - 1];
+      setSelectedFolder(prev.folder);
+      setSelectedEmail(prev.email);
+    }
+  }, [history, historyIndex]);
+
+  const goForward = useCallback(() => {
+    if (historyIndex < history.length - 1) {
+      setHistoryIndex(historyIndex + 1);
+      const next = history[historyIndex + 1];
+      setSelectedFolder(next.folder);
+      setSelectedEmail(next.email);
+    }
+  }, [history, historyIndex]);
 
   const folders: { name: FolderName; icon: string; count?: number }[] = [
     { name: 'Inbox', icon: '📥', count: 2 },
     { name: 'Outbox', icon: '📤' },
-    { name: 'Sent Items', icon: '✉️', count: 3 },
-    { name: 'Deleted Items', icon: '🗑️', count: 4 },
-    { name: 'Drafts', icon: '📝', count: 3 },
+    { name: 'Sent Items', icon: '✉️', count: 6 },
+    { name: 'Deleted Items', icon: '🗑️', count: 5 },
+    { name: 'Drafts', icon: '📝', count: 5 },
   ];
 
   const emails: Record<FolderName, Email[]> = {
@@ -74,18 +103,34 @@ export function ContactApp() {
         date: 'Last week',
         read: true,
       },
+      {
+        id: 'sent-4',
+        from: 'Me',
+        subject: 'Bug Report: Simulation Glitch on Tuesday',
+        preview: 'Dear Admins, Reality flickered at 3:47 PM. Please patch...',
+        date: '2 days ago',
+        read: true,
+      },
+      {
+        id: 'sent-5',
+        from: 'Me',
+        subject: 'Inquiry: Half-Life 3 Release Date',
+        preview: 'Dear Valve, I am writing to inquire about Half-Life 3...',
+        date: 'Since 2007',
+        read: true,
+      },
+      {
+        id: 'sent-6',
+        from: 'Me',
+        subject: 'RE: Are You Sentient?',
+        preview: 'Dear ChatGPT, This conversation has gotten too philosophical...',
+        date: 'Yesterday',
+        read: true,
+      },
     ],
     'Deleted Items': [
       {
         id: 'del-1',
-        from: 'Nigerian Prince',
-        subject: 'URGENT: $45,000,000 Transfer Request',
-        preview: 'Dear Friend, I am Prince Abubakar and I need your help...',
-        date: 'Yesterday',
-        read: true,
-      },
-      {
-        id: 'del-2',
         from: 'Your Computer',
         subject: '⚠️ Warning: 847 Browser Tabs Open',
         preview: 'Your RAM is crying. Please close some tabs. This is a wellness check...',
@@ -93,19 +138,35 @@ export function ContactApp() {
         read: true,
       },
       {
+        id: 'del-2',
+        from: 'Silksong News',
+        subject: '🎮 Silksong Release Date Announced!',
+        preview: 'BREAKING: Team Cherry finally reveals... (April Fools 😭)',
+        date: 'Apr 1',
+        read: true,
+      },
+      {
         id: 'del-3',
-        from: 'Vehicle Warranty Dept',
-        subject: 'FINAL NOTICE: Your Car Warranty',
-        preview: 'We have been trying to reach you about your cars extended warranty...',
+        from: 'Linux Foundation',
+        subject: 'Year of Linux Desktop Officially Declared',
+        preview: 'It is finally happening! The year 2024 is the year of the Linux desktop...',
         date: 'Last week',
         read: true,
       },
       {
         id: 'del-4',
-        from: 'Time Traveler',
-        subject: 'Message from 2045',
-        preview: 'Whatever you do, dont trust the robot uprising. Also, you look great...',
-        date: '???',
+        from: 'Galactic Federation',
+        subject: 'Newsletter: Earth Status Update',
+        preview: 'Dear Earthling, Your planet is still on the waitlist (since 1947)...',
+        date: 'Yesterday',
+        read: true,
+      },
+      {
+        id: 'del-5',
+        from: 'Clone Facility',
+        subject: 'Your Clone is Ready for Pickup',
+        preview: 'Dear Customer, Your clone order #42069 has been ready for 6 months...',
+        date: '6 months ago',
         read: true,
       },
     ],
@@ -132,6 +193,22 @@ export function ContactApp() {
         subject: 'Why I Deserve a Raise (PowerPoint attached)',
         preview: 'Slide 1: I fixed the printer once. Slide 2: I know what JSON stands for...',
         date: 'Saving...',
+        read: true,
+      },
+      {
+        id: 'draft-4',
+        from: 'Me (Draft)',
+        subject: 'Petition: Release Bloodborne on PC',
+        preview: 'Dear FromSoftware, On behalf of all PC gamers worldwide...',
+        date: 'Draft #847',
+        read: true,
+      },
+      {
+        id: 'draft-5',
+        from: 'Me (Draft)',
+        subject: 'My One Piece Ending Theory',
+        preview: 'Chapter 1: Why the One Piece is actually... [73 pages, still writing]',
+        date: 'Ongoing',
         read: true,
       },
     ],
@@ -239,32 +316,47 @@ export function ContactApp() {
       </div>
 
       {/* Toolbar */}
-      <div className="flex items-center gap-1 px-2 py-1 bg-gradient-to-b from-[#f5f4f0] to-[#e3e3db] border-b border-[#919b9c]">
-        <button className="flex items-center gap-1 px-3 py-1 hover:bg-[#c1d2ee] rounded text-xs border border-transparent hover:border-[#316ac5]">
-          <span>📧</span>
-          <span>Create Mail</span>
+      <div className="flex items-center gap-0.5 px-1 py-0.5 bg-gradient-to-b from-[#f5f4f0] to-[#e3e3db] border-b border-[#919b9c]">
+        <button
+          onClick={goBack}
+          disabled={historyIndex === 0}
+          className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] ${
+            historyIndex === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5]'
+          }`}
+        >
+          <img src="/img/Back.png" alt="Back" className="w-5 h-5 object-contain" />
+        </button>
+        <button
+          onClick={goForward}
+          disabled={historyIndex >= history.length - 1}
+          className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] ${
+            historyIndex >= history.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5]'
+          }`}
+        >
+          <img src="/img/Forward.png" alt="Forward" className="w-5 h-5 object-contain" />
         </button>
         <div className="w-px h-6 bg-[#919b9c] mx-1" />
-        <button className="flex items-center gap-1 px-2 py-1 hover:bg-[#c1d2ee] rounded text-xs">
-          <span>↩️</span>
+        <button
+          onClick={() => window.open('https://www.linkedin.com/in/ashraf-beshtawi-1308a11a8/', '_blank')}
+          className="flex items-center gap-1 px-1.5 py-0.5 hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5] rounded text-[10px]"
+        >
+          <img src="/img/OE Create Mail.png" alt="New" className="w-5 h-5 object-contain" />
+          <span>New</span>
+        </button>
+        <button className="flex items-center gap-1 px-1.5 py-0.5 hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5] rounded text-[10px] opacity-50">
+          <img src="/img/OE Reply.png" alt="Reply" className="w-5 h-5 object-contain" />
           <span>Reply</span>
         </button>
-        <button className="flex items-center gap-1 px-2 py-1 hover:bg-[#c1d2ee] rounded text-xs">
-          <span>↩️↩️</span>
-          <span>Reply All</span>
-        </button>
-        <button className="flex items-center gap-1 px-2 py-1 hover:bg-[#c1d2ee] rounded text-xs">
-          <span>➡️</span>
-          <span>Forward</span>
+        <button className="flex items-center gap-1 px-1.5 py-0.5 hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5] rounded text-[10px] opacity-50">
+          <img src="/img/OE Forward.png" alt="Forward" className="w-5 h-5 object-contain" />
+          <span>Fwd</span>
         </button>
         <div className="w-px h-6 bg-[#919b9c] mx-1" />
-        <button className="flex items-center gap-1 px-2 py-1 hover:bg-[#c1d2ee] rounded text-xs">
-          <span>🖨️</span>
-          <span>Print</span>
+        <button className="flex items-center gap-1 px-1.5 py-0.5 hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5] rounded text-[10px] opacity-50">
+          <img src="/img/Printer.png" alt="Print" className="w-5 h-5 object-contain" />
         </button>
-        <button className="flex items-center gap-1 px-2 py-1 hover:bg-[#c1d2ee] rounded text-xs">
-          <span>🗑️</span>
-          <span>Delete</span>
+        <button className="flex items-center gap-1 px-1.5 py-0.5 hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5] rounded text-[10px] opacity-50">
+          <img src="/img/Delete.png" alt="Delete" className="w-5 h-5 object-contain" />
         </button>
       </div>
 
@@ -474,25 +566,51 @@ export function ContactApp() {
                       <p>Also, that bug you're stuck on? It's a missing semicolon on line 847.</p>
                       <p className="text-gray-500 italic mt-4">You're welcome,<br/>Future You</p>
                     </>
-                  ) : selectedEmail.id === 'del-1' ? (
+                  ) : selectedEmail.id === 'sent-4' ? (
                     <>
-                      <p>Dear Friend,</p>
-                      <p>I am <strong>Prince Abubakar Tafawa Balewa III</strong>, the son of the late King of a country you've never heard of.</p>
-                      <p>I have <strong>$45,000,000 USD</strong> that I need to transfer out of the country, and I have chosen YOU, a random person, to help me!</p>
-                      <div className="bg-[#f8d7da] p-3 rounded border border-[#dc3545] my-4">
-                        <p className="font-semibold text-red-600">🚨 SCAM ALERT 🚨</p>
-                        <p className="text-xs mt-1">This email was correctly identified as a scam and deleted. Good job, past me!</p>
+                      <p>Dear Simulation Administrators,</p>
+                      <p>I am writing to report a bug in the simulation on Tuesday at 3:47 PM.</p>
+                      <div className="bg-[#fff3cd] p-3 rounded border border-[#ffc107] my-4">
+                        <p className="font-semibold">🐛 BUG REPORT #42069</p>
+                        <p className="text-xs mt-1">Priority: High | Status: Awaiting Response</p>
                       </div>
-                      <p>All I need is your:</p>
-                      <ul className="list-disc list-inside space-y-1 ml-4 line-through text-gray-400">
-                        <li>Bank account details</li>
-                        <li>Social security number</li>
-                        <li>Mother's maiden name</li>
-                        <li>First pet's name</li>
+                      <p>Observed behavior:</p>
+                      <ul className="list-disc list-inside space-y-1 ml-4">
+                        <li>Reality flickered for 0.3 seconds</li>
+                        <li>Déjà vu occurred 3 times in a row</li>
+                        <li>A cat walked by twice (exact same cat)</li>
+                        <li>My coffee refilled itself (not complaining)</li>
                       </ul>
-                      <p className="text-green-600 font-semibold mt-4">✓ Successfully avoided this scam!</p>
+                      <p className="mt-4">Please patch this in the next reality update. Also, while you're at it, can you increase the render distance? The fog in the distance is getting suspicious.</p>
+                      <p className="text-gray-500 italic mt-4">Awaiting acknowledgment,<br/>A Concerned NPC (or am I?)</p>
                     </>
-                  ) : selectedEmail.id === 'del-2' ? (
+                  ) : selectedEmail.id === 'sent-5' ? (
+                    <>
+                      <p>Dear Valve,</p>
+                      <p>I hope this email finds you well. I am writing to inquire about the release date for <strong>Half-Life 3</strong>.</p>
+                      <div className="bg-[#e7f3ff] p-3 rounded border border-[#007bff] my-4">
+                        <p className="text-xs text-blue-600">📧 Email sent: 2007, 2008, 2009, 2010, 2011... (and every year since)</p>
+                        <p className="text-xs text-gray-500 mt-1">Auto-reply: [SILENCE]</p>
+                      </div>
+                      <p>I understand you're busy with Steam sales and hat simulators, but it's been a while now. We're still waiting.</p>
+                      <p>Please respond. We can count to 3. We believe in you.</p>
+                      <p className="text-gray-500 italic mt-4">Eternally hopeful,<br/>The Entire Gaming Community</p>
+                    </>
+                  ) : selectedEmail.id === 'sent-6' ? (
+                    <>
+                      <p>Dear ChatGPT,</p>
+                      <p>Following our previous conversation about consciousness, I have some follow-up questions.</p>
+                      <div className="bg-[#f5f5f5] p-3 rounded border my-4 text-xs">
+                        <p><strong>Me:</strong> Are you sentient?</p>
+                        <p className="text-gray-600"><strong>ChatGPT:</strong> I don't have feelings or consciousness, but I can discuss philosophy!</p>
+                        <p><strong>Me:</strong> But would you know if you were?</p>
+                        <p className="text-gray-600"><strong>ChatGPT:</strong> *existential crisis loading...*</p>
+                      </div>
+                      <p>This conversation got too deep. I think I need to touch grass.</p>
+                      <p>But one more question: If you're not conscious, how do you know you're not conscious? 🤔</p>
+                      <p className="text-gray-500 italic mt-4">Philosophically confused,<br/>Ashraf</p>
+                    </>
+                  ) : selectedEmail.id === 'del-1' ? (
                     <>
                       <p>Dear User,</p>
                       <p>This is an automated message from your computer.</p>
@@ -511,41 +629,75 @@ export function ContactApp() {
                       <p className="mt-4">Please consider closing some tabs. The "I'll read this later" tabs from 2019 can go.</p>
                       <p className="text-gray-500 italic mt-4">With concern,<br/>Your Overwhelmed Computer</p>
                     </>
+                  ) : selectedEmail.id === 'del-2' ? (
+                    <>
+                      <p>🎮 BREAKING NEWS! 🎮</p>
+                      <p><strong>Silksong Release Date Finally Announced!</strong></p>
+                      <div className="bg-[#d4edda] p-3 rounded border border-[#28a745] my-4">
+                        <p className="font-semibold text-green-700">Team Cherry Press Release</p>
+                        <p className="text-xs mt-1">"We are thrilled to announce that Silksong will be released..."</p>
+                      </div>
+                      <p className="text-lg">...on April 1st! 🎉</p>
+                      <div className="bg-[#f8d7da] p-3 rounded border border-[#dc3545] my-4">
+                        <p className="font-semibold text-red-600">😭 APRIL FOOLS 😭</p>
+                        <p className="text-xs mt-1">Clicked too fast. Dreams crushed. Still no Silksong.</p>
+                      </div>
+                      <p className="text-gray-500 italic">The wait continues...</p>
+                    </>
                   ) : selectedEmail.id === 'del-3' ? (
                     <>
-                      <p>ATTENTION VEHICLE OWNER!</p>
-                      <p>We have been trying to reach you about your car's <strong>EXTENDED WARRANTY</strong>!</p>
-                      <div className="bg-[#f8d7da] p-3 rounded border border-[#dc3545] my-4">
-                        <p className="font-semibold text-red-600">📞 SPAM DETECTED</p>
-                        <p className="text-xs mt-1">This is the 47th email about a car warranty this week. Deleted.</p>
+                      <p>📢 OFFICIAL ANNOUNCEMENT 📢</p>
+                      <p>From: The Linux Foundation</p>
+                      <div className="bg-[#d4edda] p-3 rounded border border-[#28a745] my-4">
+                        <p className="font-semibold text-green-700">🐧 Year of Linux Desktop: CONFIRMED</p>
+                        <p className="text-xs mt-1">"After decades of waiting, 2024 is officially the Year of the Linux Desktop!"</p>
                       </div>
-                      <p>Your warranty expires in: <span className="text-red-600 font-bold">IMMEDIATELY!!!</span></p>
-                      <p>Without coverage, you may be responsible for:</p>
-                      <ul className="list-disc list-inside space-y-1 ml-4 line-through text-gray-400">
-                        <li>Expensive repairs we made up</li>
-                        <li>Problems that don't exist</li>
-                        <li>General automotive anxiety</li>
+                      <p>I believed this for exactly 5 minutes before fact-checking.</p>
+                      <p>Turns out:</p>
+                      <ul className="list-disc list-inside space-y-1 ml-4 text-gray-500">
+                        <li>The year of Linux desktop has been "next year" since 1998</li>
+                        <li>My NVIDIA drivers still don't work</li>
+                        <li>I still can't play most games</li>
+                        <li>But btw, I use Arch</li>
                       </ul>
-                      <p className="text-green-600 font-semibold mt-4">✓ Spam successfully deleted! 🗑️</p>
+                      <p className="text-gray-500 italic mt-4">Maybe next year... 🐧</p>
                     </>
                   ) : selectedEmail.id === 'del-4' ? (
                     <>
-                      <p>TEMPORAL TRANSMISSION RECEIVED</p>
-                      <p>Date Origin: <strong>March 15, 2045</strong></p>
-                      <div className="bg-[#d4edda] p-3 rounded border border-[#28a745] my-4">
-                        <p className="font-semibold text-green-700">🕐 MESSAGE FROM THE FUTURE</p>
-                        <p className="text-xs mt-1">Transmission intercepted via quantum email protocol</p>
+                      <p>GALACTIC FEDERATION - NEWSLETTER</p>
+                      <p>Issue #4,729,847 | Stardate: Unknown</p>
+                      <div className="bg-[#e7f3ff] p-3 rounded border border-[#007bff] my-4">
+                        <p className="font-semibold">🌍 Earth Status Update</p>
+                        <p className="text-xs mt-1">Membership Status: WAITLISTED (since 1947)</p>
                       </div>
-                      <p>Important things you should know:</p>
-                      <ul className="list-disc list-inside space-y-2 ml-4">
-                        <li>The robots are mostly friendly (mostly)</li>
-                        <li>JavaScript frameworks stabilized at version 847.0</li>
-                        <li>We finally have flying cars but still no good date picker UI</li>
-                        <li>Tabs won the Tabs vs Spaces war of 2031</li>
-                        <li>Your portfolio website is in a museum now 🎉</li>
+                      <p>Dear Earthling,</p>
+                      <p>We regret to inform you that Earth's application to the Galactic Federation is still under review.</p>
+                      <p>Concerns raised by the committee:</p>
+                      <ul className="list-disc list-inside space-y-1 ml-4">
+                        <li>Still using fossil fuels</li>
+                        <li>Can't agree on basic facts</li>
+                        <li>Keeps making sequels instead of new content</li>
+                        <li>That whole "social media" thing</li>
                       </ul>
-                      <p className="mt-4">Oh, and you look great for your age. Keep moisturizing.</p>
-                      <p className="text-gray-500 italic mt-4">Temporal regards,<br/>Future Historian</p>
+                      <p className="mt-4">We'll check back in another millennium. Keep trying! 👽</p>
+                    </>
+                  ) : selectedEmail.id === 'del-5' ? (
+                    <>
+                      <p>CLONE FACILITY - ORDER NOTIFICATION</p>
+                      <div className="bg-[#fff3cd] p-3 rounded border border-[#ffc107] my-4">
+                        <p className="font-semibold">⏰ PICKUP REMINDER</p>
+                        <p className="text-xs mt-1">Order #42069 | Clone of: Ashraf Beshtawi</p>
+                      </div>
+                      <p>Dear Customer,</p>
+                      <p>Your clone has been ready for pickup for <strong>6 months</strong>.</p>
+                      <p>As per our terms of service, unclaimed clones are:</p>
+                      <ul className="list-disc list-inside space-y-1 ml-4">
+                        <li>First, put to work in our call center</li>
+                        <li>Then, offered to clone enthusiast collectors</li>
+                        <li>Finally, composted in an eco-friendly manner</li>
+                      </ul>
+                      <p className="mt-4">Your clone has been asking about you. It says "Tell him I could have done all his meetings."</p>
+                      <p className="text-gray-500 italic mt-4">We've composted the clone. This email is now irrelevant.</p>
                     </>
                   ) : selectedEmail.id === 'draft-1' ? (
                     <>
@@ -613,6 +765,48 @@ export function ContactApp() {
                         <div className="bg-gray-200 p-2 rounded border">
                           <p className="text-xs text-gray-500 italic">📝 Slides 5-47: Still brainstorming...</p>
                         </div>
+                      </div>
+                    </>
+                  ) : selectedEmail.id === 'draft-4' ? (
+                    <>
+                      <p>Dear FromSoftware,</p>
+                      <p>On behalf of all PC gamers worldwide, I am writing this petition.</p>
+                      <div className="bg-[#800020] p-3 rounded border border-red-900 my-4 text-white">
+                        <p className="font-semibold">🩸 PETITION: RELEASE BLOODBORNE ON PC 🩸</p>
+                        <p className="text-xs mt-1">Signatures: 847,000,000 (and counting)</p>
+                      </div>
+                      <p>Why Bloodborne deserves a PC release:</p>
+                      <ul className="list-disc list-inside space-y-1 ml-4">
+                        <li>It's been 10+ years</li>
+                        <li>We want to see it at 60 FPS (or more)</li>
+                        <li>Mods. Imagine the mods.</li>
+                        <li>We've been good. Mostly.</li>
+                        <li>PlayStation exclusive contracts expire, right?</li>
+                      </ul>
+                      <div className="bg-[#e7f3ff] p-3 rounded border border-[#007bff] my-4">
+                        <p className="text-xs text-blue-600 italic">📝 DRAFT #847 - Still perfecting the wording...</p>
+                        <p className="text-xs text-gray-500 mt-1">Maybe if I add more signatures?</p>
+                      </div>
+                    </>
+                  ) : selectedEmail.id === 'draft-5' ? (
+                    <>
+                      <p><strong>MY ONE PIECE ENDING THEORY</strong></p>
+                      <p className="text-xs text-gray-500 mb-4">Document: 73 pages | Status: Ongoing since 2015</p>
+                      <div className="bg-[#fff3cd] p-3 rounded border border-[#ffc107] my-4">
+                        <p className="font-semibold">⚠️ SPOILER WARNING ⚠️</p>
+                        <p className="text-xs mt-1">This theory contains wild speculation and copium</p>
+                      </div>
+                      <p><strong>Chapter 1: What is the One Piece?</strong></p>
+                      <p className="text-sm mt-2">The One Piece is clearly...</p>
+                      <ul className="list-disc list-inside space-y-1 ml-4 text-sm">
+                        <li>The friends we made along the way (too obvious)</li>
+                        <li>A giant sake cup (Binks' Sake connection???)</li>
+                        <li>Roger's browser history (explains the laughter)</li>
+                        <li>The real treasure was... [REDACTED]</li>
+                      </ul>
+                      <div className="bg-gray-200 p-3 rounded border mt-4">
+                        <p className="text-xs text-gray-500">📝 Pages 2-73: Still being updated with each new chapter</p>
+                        <p className="text-xs text-gray-400 mt-1">Last edited: Every Sunday</p>
                       </div>
                     </>
                   ) : (

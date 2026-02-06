@@ -24,7 +24,7 @@ export const portfolioItems: DesktopItem[] = [
   { id: 'backend', label: 'Backend.exe', icon: '/img/Command Prompt.png', component: 'backend', width: 700, height: 500, minWidth: 500, minHeight: 350, group: 'portfolio' },
   { id: 'web3', label: 'Web3.exe', icon: '/img/Internet Connection Wizard.png', component: 'web3', width: 600, height: 500, minWidth: 400, minHeight: 350, group: 'portfolio' },
   { id: 'ai', label: 'AI.exe', icon: '/img/System Information.png', component: 'ai', width: 700, height: 500, minWidth: 500, minHeight: 350, group: 'portfolio' },
-  { id: 'contact', label: 'Contact.exe', icon: '/img/Email.png', component: 'contact', width: 750, height: 550, minWidth: 500, minHeight: 400, group: 'portfolio' },
+  { id: 'contact', label: 'Outlook', icon: '/img/Outlook Express.png', component: 'contact', width: 750, height: 550, minWidth: 500, minHeight: 400, group: 'portfolio' },
 ];
 
 // Utility apps (bottom left)

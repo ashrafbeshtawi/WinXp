@@ -153,11 +153,6 @@ export function DesktopIcons() {
 
   const allItems: DesktopItem[] = [...systemItems, ...portfolioItems, ...utilityItems];
 
-  // Find portfolio bounds for the label
-  const portfolioPositions = positions.filter(p => portfolioItems.some(pi => pi.id === p.id));
-  const portfolioMinX = portfolioPositions.length > 0 ? Math.min(...portfolioPositions.map(p => p.x)) : 100;
-  const portfolioMinY = portfolioPositions.length > 0 ? Math.min(...portfolioPositions.map(p => p.y)) : 10;
-
   return (
     <div
       className="absolute inset-0"
@@ -166,21 +161,6 @@ export function DesktopIcons() {
       onMouseLeave={handleMouseUp}
       onClick={handleDesktopClick}
     >
-      {/* Portfolio Group Label */}
-      {positions.length > 0 && (
-        <div
-          className="absolute px-2 py-0.5 rounded bg-black/30 backdrop-blur-sm border border-white/20 pointer-events-none select-none"
-          style={{
-            left: portfolioMinX,
-            top: portfolioMinY - 22,
-          }}
-        >
-          <span className="text-white text-[10px] font-semibold tracking-wide drop-shadow">
-            ⭐ My Projects
-          </span>
-        </div>
-      )}
-
       {allItems.map((item) => {
         const pos = positions.find((p) => p.id === item.id);
         if (!pos) return null;
