@@ -21,7 +21,7 @@ export function StartButton({ isOpen, onClick }: StartButtonProps) {
       tabIndex={0}
       onClick={handleClick}
       onKeyDown={(e) => e.key === 'Enter' && onClick()}
-      className={`h-full px-3 flex items-center gap-2 rounded-r-xl font-bold text-white text-sm cursor-pointer select-none ${
+      className={`h-full px-4 flex items-center gap-2 rounded-r-xl font-bold text-white cursor-pointer select-none ${
         isOpen
           ? 'bg-gradient-to-b from-[#2a6e2a] to-[#1a4e1a] shadow-inner'
           : 'bg-gradient-to-b from-[#3c8f3c] to-[#2a6e2a] hover:from-[#4aa34a] hover:to-[#3c8f3c]'
@@ -35,10 +35,10 @@ export function StartButton({ isOpen, onClick }: StartButtonProps) {
       <img
         src="/img/Taskbar and Start Menu.png"
         alt="Start"
-        className="w-6 h-6 object-contain"
+        className="w-7 h-7 object-contain"
         draggable={false}
       />
-      <span className="italic tracking-wide">start</span>
+      <span className="italic tracking-wide text-[17px]" style={{ textShadow: '1px 1px 1px rgba(0,0,0,0.3)' }}>start</span>
     </div>
   );
 }
