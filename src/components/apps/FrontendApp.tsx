@@ -107,15 +107,18 @@ export function FrontendApp() {
         </button>
         <button className="flex items-center gap-1 px-1.5 py-0.5 hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5] rounded text-[10px] opacity-50">
           <img src="/img/Forward.png" alt="Forward" className="w-5 h-5 object-contain" />
+          <span>Forward</span>
         </button>
         <button
           onClick={() => window.location.reload()}
           className="flex items-center gap-1 px-1.5 py-0.5 hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5] rounded text-[10px]"
         >
           <img src="/img/IE Refresh.png" alt="Refresh" className="w-5 h-5 object-contain" />
+          <span>Refresh</span>
         </button>
         <button className="flex items-center gap-1 px-1.5 py-0.5 hover:bg-[#c1d2ee] hover:border hover:border-[#316ac5] rounded text-[10px]">
           <img src="/img/IE Home.png" alt="Home" className="w-5 h-5 object-contain" />
+          <span>Home</span>
         </button>
         <div className="w-px h-6 bg-[#919b9c] mx-1" />
         <button

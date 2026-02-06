@@ -325,6 +325,7 @@ export function ContactApp() {
           }`}
         >
           <img src="/img/Back.png" alt="Back" className="w-5 h-5 object-contain" />
+          <span>Back</span>
         </button>
         <button
           onClick={goForward}
@@ -334,6 +335,7 @@ export function ContactApp() {
           }`}
         >
           <img src="/img/Forward.png" alt="Forward" className="w-5 h-5 object-contain" />
+          <span>Forward</span>
         </button>
         <div className="w-px h-6 bg-[#919b9c] mx-1" />
         <button
