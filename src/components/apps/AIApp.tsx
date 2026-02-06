@@ -7,6 +7,27 @@ interface LogEntry {
   message: string;
 }
 
+const INITIAL_LOGS: LogEntry[] = [
+  { timestamp: '00:00:01', type: 'info', message: 'Neural Network Console v1.0 initialized' },
+  { timestamp: '00:00:02', type: 'info', message: 'Loading genetic algorithm modules...' },
+  { timestamp: '00:00:03', type: 'success', message: 'GA Engine loaded successfully' },
+  { timestamp: '00:00:04', type: 'info', message: 'Connecting to n8n workflow automation...' },
+  { timestamp: '00:00:05', type: 'success', message: 'n8n integration active' },
+  { timestamp: '00:00:06', type: 'info', message: 'Initializing Auto-Trader neural network...' },
+  { timestamp: '00:00:07', type: 'training', message: 'Training started - Population: 100, Generations: 500' },
+];
+
+const TRAINING_MESSAGES = [
+  'Evaluating fitness functions...',
+  'Applying crossover operators...',
+  'Mutating chromosome sequences...',
+  'Selecting elite individuals...',
+  'Optimizing trading parameters...',
+  'Backtesting strategy performance...',
+  'Adjusting neural weights...',
+  'Processing market signals...',
+];
+
 export function AIApp() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [epoch, setEpoch] = useState(0);
@@ -15,33 +36,15 @@ export function AIApp() {
   const [showAbout, setShowAbout] = useState(false);
   const openWindow = useWindowStore((state) => state.openWindow);
 
-  const initialLogs: LogEntry[] = [
-    { timestamp: '00:00:01', type: 'info', message: 'Neural Network Console v1.0 initialized' },
-    { timestamp: '00:00:02', type: 'info', message: 'Loading genetic algorithm modules...' },
-    { timestamp: '00:00:03', type: 'success', message: 'GA Engine loaded successfully' },
-    { timestamp: '00:00:04', type: 'info', message: 'Connecting to n8n workflow automation...' },
-    { timestamp: '00:00:05', type: 'success', message: 'n8n integration active' },
-    { timestamp: '00:00:06', type: 'info', message: 'Initializing Auto-Trader neural network...' },
-    { timestamp: '00:00:07', type: 'training', message: 'Training started - Population: 100, Generations: 500' },
-  ];
-
-  const trainingMessages = [
-    'Evaluating fitness functions...',
-    'Applying crossover operators...',
-    'Mutating chromosome sequences...',
-    'Selecting elite individuals...',
-    'Optimizing trading parameters...',
-    'Backtesting strategy performance...',
-    'Adjusting neural weights...',
-    'Processing market signals...',
-  ];
-
   // Initial logs animation
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
-      if (index < initialLogs.length) {
-        setLogs(prev => [...prev, initialLogs[index]]);
+      if (index < INITIAL_LOGS.length) {
+        const logEntry = INITIAL_LOGS[index];
+        if (logEntry) {
+          setLogs(prev => [...prev, logEntry]);
+        }
         index++;
       } else {
         clearInterval(interval);
@@ -72,7 +75,7 @@ export function AIApp() {
 
       // Add random training log
       if (Math.random() > 0.7) {
-        const randomMessage = trainingMessages[Math.floor(Math.random() * trainingMessages.length)];
+        const randomMessage = TRAINING_MESSAGES[Math.floor(Math.random() * TRAINING_MESSAGES.length)];
         const timestamp = `00:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`;
         setLogs(prev => [...prev.slice(-20), { timestamp, type: 'training', message: randomMessage }]);
       }
@@ -266,7 +269,7 @@ export function AIApp() {
           <span className="text-xs text-gray-600">{logs.length} entries</span>
         </div>
         <div className="flex-1 overflow-y-auto p-4 space-y-1 text-xs">
-          {logs.map((log, index) => (
+          {logs.map((log, index) => log && (
             <div key={index} className="flex gap-2 hover:bg-white/5 px-2 py-1 rounded">
               <span className="text-gray-600">[{log.timestamp}]</span>
               <span className={`${getLogColor(log.type)} w-16`}>{getLogIcon(log.type)}</span>
